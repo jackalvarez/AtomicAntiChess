@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Graphics_map.svg</file>
+        <file>Explosion2_image.png</file>
+        <file>Explosion1_image.png</file>
+    </qresource>
+</RCC>
