@@ -6,6 +6,11 @@ class Pawn : public Piece
   private:
 
   public:
+    Pawn(char** board)
+        : Piece { board }
+    {
+        setElementId( QString("%1Pawn").arg(/*color*/ "White");
+    }
 	std::vector<COORDINATES> getPossibleMoves( char* boardState)
 	{
 		std::vector<COORDINATES> possibleMoves;

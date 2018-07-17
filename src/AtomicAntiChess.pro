@@ -29,12 +29,18 @@ HEADERS
 
 HEADERS += \
     Score.h \
-    Game.h
+    Game.h \
+    Score.h \
+    Piece.h \
+    Board.h
 
 SOURCES += \
     main.cpp \
     Score.cpp \
-    Game.cpp
+    Game.cpp \
+    Piece.cpp \
+    Pawn.cpp \
+    Board.cpp
 
 RESOURCES += \
     ../Assets/assets.qrc

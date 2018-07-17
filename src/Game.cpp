@@ -55,18 +55,19 @@ int Game::run()
 	this->scene->addItem(this->score);
 
 	// Load the graphic resources
-	this->svgRenderer = new QSvgRenderer(QString("://assets.svg"), this);
-
+    this->svgRenderer = new QSvgRenderer(QString("://Graphics_map.svg"), this);
 	// Create the player control
-	this->player = new Player();
+    this->player = new Player();
 	this->player->setSharedRenderer(svgRenderer);
 	this->scene->addItem(this->player);
-	this->player->setInitialPos();
+    this->player->setInitialPos();
 
+    /*
 	// Launch an enemy periodically
 	QTimer* timer = new QTimer(this);
 	connect(timer, &QTimer::timeout, this, &Game::launchObstacle);
 	timer->start(1500);
+    */
 
 	// Play background music
 	playBackgroundMusic("FunkGameLoop32m.mp3");

@@ -3,11 +3,17 @@
 
 #include <vector>
 
+#include <QGraphicsSvgItem>
+
 namespace chess
 {
 
-class Piece
+class Piece : public QGraphicsSvgItem
 {
+    Q_OBJECT
+
+    //Maybe
+    //Q_DISABLE_COPY(Piece)
 
 protected:
 	#ifdef SECOND_COMMIT
@@ -31,12 +37,24 @@ public:
 		{}
 	};
 
-	Piece() = delete;
-	Piece(char** board) : board { board } 
-	{}
+    explicit Piece(char** board, QGraphicsItem* parent = nullptr)
+        : QGraphicsSvgItem { parent }
+        , board { board }
+    {
+    }
+    ~Piece();
+
+    void destroy(bool removeFromScene = true, bool deleteObject = true)
+    {
+        if (removeFromScene) scene()->removeItem(this);
+        if (deleteObject) this->deleteLater();
+    }
+
+    /*Piece(char** board) : board { board }
+    {}*/
 
 	Piece(std::string pieceType);
-	std::vector<COORDINATES> getPossibleMoves(COORDINATES currentPosition);
+    virtual std::vector<COORDINATES> getPossibleMoves(COORDINATES currentPosition);
 
 	#ifdef SECOND_COMMIT
 	short operator-=(short damageDealt);

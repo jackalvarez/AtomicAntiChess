@@ -8,6 +8,7 @@ class QSvgRenderer;
 class QGraphicsView;
 class Player;
 class Score;
+Class Board;
 
 /**
 	Game controller. An object that represents the game.
@@ -25,6 +26,8 @@ class Game : public QApplication
 	Score* score;
 	/// Parsers the assets svg file
 	QSvgRenderer* svgRenderer = nullptr;
+    /// Keeps pointers to the pieces
+    Board* board;
 
   public:
 	/// Constructor
