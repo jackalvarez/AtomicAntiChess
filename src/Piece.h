@@ -8,12 +8,12 @@
 
 struct COORDINATE
 {
-    short file;
     short row;
+    short file;
 
-    COORDINATE(short file = 0, short row = 0)
-    : file { file }
-    , row { row }
+    COORDINATE(short row = 0, short file = 0)
+    : row { row }
+    , file { file }
     {}
 };
 

@@ -5,7 +5,7 @@
 class Pawn : public Piece
 {
   public:
-    Pawn(char** board)
+    Pawn( Piece** board)
         : Piece { board }
     {
         setElementId( QString("%1Pawn").arg(/*color*/ "White") );
@@ -15,17 +15,19 @@ class Pawn : public Piece
 	{
 		std::vector<COORDINATES> possibleMoves;
 
-		if ( currentPosition.row > 0 && currentPosition.file < 7)
+		int direction = (this->symbol == 'P') ? -1 : 1;
+
+		if ( currentPosition.row > 0 && currentPosition.row < 7)
 		{
 			// If this is the pawns first move, it can move twice
 			if ( isFirstMove() )
-				possibleMoves.push_back( COORDINATES(currentPosition.file+2, currentPosition.row) );
-			if ( isFree(currentPosition.file+1, currentPosition.row))
-				possibleMoves.push_back( COORDINATES(currentPosition.file+1, currentPosition.row) );
-			if ( isEnemy(currentPosition.file+1, currentPosition.row+1) ) 
-				possibleMoves.push_back( COORDINATES(currentPosition.file+1, currentPosition.row+1) );
-			if ( isEnemy(currentPosition.file+1, currentPosition.row-1) ) 
-				possibleMoves.push_back( COORDINATES(currentPosition.file+1, currentPosition.row-1) );
+				possibleMoves.push_back( COORDINATES(currentPosition.row+(2*direction), currentPosition.file) );
+			if ( isFree(currentPosition.row+direction, currentPosition.file))
+				possibleMoves.push_back( COORDINATES(currentPosition.row+direction, currentPosition.file) );
+			if ( isEnemy(currentPosition.row+direction, currentPosition.file+1) ) 
+				possibleMoves.push_back( COORDINATES(currentPosition.row+direction, currentPosition.file+1) );
+			if ( isEnemy(currentPosition.row+direction, currentPosition.file-1) ) 
+				possibleMoves.push_back( COORDINATES(currentPosition.row+direction, currentPosition.file-1) );
 		}
 
 		return possibleMoves;
@@ -46,6 +48,7 @@ class Pawn : public Piece
 
 	inline bool isFree( short row, short column)
 	{
+
 		return this->boardState[row][column] == nullptr;
 	}
 
