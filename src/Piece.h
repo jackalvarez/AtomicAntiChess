@@ -23,8 +23,8 @@ protected:
 
 	COORDINATE currentPosition;
 	std::vector<COORDINATE> possibleMoves;
-	char** board;
 	char symbol;
+	Piece** board;
 
 public:
 	struct COORDINATE
@@ -38,12 +38,14 @@ public:
 		{}
 	};
 
-    explicit Piece(char** board, char symbol, QGraphicsItem* parent = nullptr)
-        : QGraphicsSvgItem { parent }
+    explicit Piece(char symbol, Piece** board, QGraphicsItem* parent = nullptr)
+        : symbol { symbol }
         , board { board }
-        , symbol { symbol }
+        , QGraphicsSvgItem { parent }
+        
     {
     }
+    
     ~Piece();
 
     void destroy(bool removeFromScene = true, bool deleteObject = true)
@@ -52,10 +54,6 @@ public:
         if (deleteObject) this->deleteLater();
     }
 
-    /*Piece(char** board) : board { board }
-    {}*/
-
-	Piece(std::string pieceType);
     virtual std::vector<COORDINATES> getPossibleMoves(COORDINATES currentPosition);
 
 	#ifdef SECOND_COMMIT

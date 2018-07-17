@@ -46,15 +46,15 @@ class Pawn : public Piece
 
 	inline bool isFree( short row, short column)
 	{
-		return this->boardState[row][column] == '-';
+		return this->boardState[row][column] == nullptr;
 	}
 
 	bool isEnemy( short row, short column)
 	{
 		// If the pawn is black, check if the cell is upper case
 		if ( this->symbol == 'p')
-			return isuper(boardState[row][column]);
+			return isuper(boardState[row][column].symbol);
 
-		return islower(this->boardState[row][column]);
+		return islower(this->boardState[row][column].symbol);
 	}
 };

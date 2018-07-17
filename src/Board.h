@@ -28,7 +28,7 @@ private:
 
 public:
 	// Constructor. Creates the board for a game in the starting position.
-	board();
+	explicit board();
 
 	// Makes sure that a given move is done an the board state is changed
 	void makeMove();
