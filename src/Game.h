@@ -8,7 +8,7 @@ class QSvgRenderer;
 class QGraphicsView;
 class Player;
 class Score;
-Class Board;
+class Board;
 
 /**
 	Game controller. An object that represents the game.

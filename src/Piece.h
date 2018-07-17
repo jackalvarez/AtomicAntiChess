@@ -5,8 +5,17 @@
 
 #include <QGraphicsSvgItem>
 
-namespace chess
+
+struct COORDINATE
 {
+    short file;
+    short row;
+
+    COORDINATE(short file = 0, short row = 0)
+    : file { file }
+    , row { row }
+    {}
+};
 
 class Piece : public QGraphicsSvgItem
 {
@@ -24,21 +33,11 @@ protected:
 	COORDINATE currentPosition;
 	std::vector<COORDINATE> possibleMoves;
 	char symbol;
-	Piece** board;
+    Piece*** board;
 
 public:
-	struct COORDINATE
-	{
-		short file;
-		short row;
 
-		COORDINATES(short file, short row)
-		: file { file }
-		, row { row }
-		{}
-	};
-
-    explicit Piece(char symbol, Piece** board, QGraphicsItem* parent = nullptr)
+    explicit Piece(char symbol, Piece*** board, QGraphicsItem* parent = nullptr)
         : symbol { symbol }
         , board { board }
         , QGraphicsSvgItem { parent }
@@ -46,15 +45,21 @@ public:
     {
     }
     
-    ~Piece();
-
+    ~Piece()
+    {
+    }
+#if 0
     void destroy(bool removeFromScene = true, bool deleteObject = true)
     {
         if (removeFromScene) scene()->removeItem(this);
         if (deleteObject) this->deleteLater();
     }
-
-    virtual std::vector<COORDINATES> getPossibleMoves(COORDINATES currentPosition);
+#endif
+    virtual std::vector<COORDINATE> getPossibleMoves(COORDINATE currentPosition)
+    {
+        std::vector<COORDINATE> possibleMoves;
+        return possibleMoves;
+    }
 
 	#ifdef SECOND_COMMIT
 	short operator-=(short damageDealt);
@@ -62,8 +67,9 @@ public:
 	inline short getDamage();
 	#endif
 
+    inline char getSymbol() const { return this->symbol; }
 };
 
-}
+
 
 #endif //PIECE_H

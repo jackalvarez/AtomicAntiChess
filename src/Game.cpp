@@ -33,12 +33,12 @@ int Game::run()
 	// A visible rectangle of the scene
 	this->view = new QGraphicsView(this->scene);
   #if ! defined(Q_OS_ANDROID) && ! defined(Q_OS_IOS)
-	this->view->resize(800, 600);
+    this->view->resize(720, 695);
   #endif
 
 	// Set a black color background or add an image as a background
 	this->view->setBackgroundBrush(QBrush(Qt::black, Qt::SolidPattern));
-//	scene->addItem( new QGraphicsPixmapItem(QPixmap(":/Background.png")) );
+    scene->addItem( new QGraphicsPixmapItem(QPixmap(":/board.png")) );
 
 	// The scene has infinite size, but we want it has the same size than the view
 	// This stops the weird behavior of the autoscroll feature of the view being smaller than the
@@ -48,20 +48,22 @@ int Game::run()
 	// Disable scrollbars because they are not longer needed
 	this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
+#if 0
 	// A label to show the player score
 	this->score = new Score(tr("Score"), 0, Qt::blue);
 	this->score->setPos(5, 0);
 	this->scene->addItem(this->score);
-
+#endif
 	// Load the graphic resources
     this->svgRenderer = new QSvgRenderer(QString("://Graphics_map.svg"), this);
-	// Create the player control
+
+#if 0
+    // Create the player control
     this->player = new Player();
 	this->player->setSharedRenderer(svgRenderer);
 	this->scene->addItem(this->player);
     this->player->setInitialPos();
-
+#endif
     /*
 	// Launch an enemy periodically
 	QTimer* timer = new QTimer(this);

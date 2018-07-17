@@ -7,7 +7,7 @@
 
 #define SECOND_COMMIT 0
 
-class board
+class Board
 {
 
 private: 
@@ -24,11 +24,11 @@ private:
 	 * is lower case, it is a black piece. For example, "'K' | 'p' | 'N'" would 
 	 * mean there is a black pawn between the white king and a white night.	
 	*/
-	char** boardState;
+    Piece*** boardState;
 
 public:
 	// Constructor. Creates the board for a game in the starting position.
-	explicit board();
+    explicit Board();
 
 	// Makes sure that a given move is done an the board state is changed
 	void makeMove();
