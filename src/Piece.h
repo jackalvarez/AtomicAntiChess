@@ -24,6 +24,7 @@ protected:
 	COORDINATE currentPosition;
 	std::vector<COORDINATE> possibleMoves;
 	char** board;
+	char symbol;
 
 public:
 	struct COORDINATE
@@ -37,9 +38,10 @@ public:
 		{}
 	};
 
-    explicit Piece(char** board, QGraphicsItem* parent = nullptr)
+    explicit Piece(char** board, char symbol, QGraphicsItem* parent = nullptr)
         : QGraphicsSvgItem { parent }
         , board { board }
+        , symbol { symbol }
     {
     }
     ~Piece();
