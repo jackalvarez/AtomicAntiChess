@@ -9,7 +9,7 @@
 
 #include "Game.h"
 #include "Score.h"
-
+#include "Board.h"
 Game::Game(int &argc, char **argv, int flags)
 	: QApplication(argc, argv, flags)
 {
@@ -38,7 +38,9 @@ int Game::run()
 
 	// Set a black color background or add an image as a background
 	this->view->setBackgroundBrush(QBrush(Qt::black, Qt::SolidPattern));
-    scene->addItem( new QGraphicsPixmapItem(QPixmap(":/board.png")) );
+    this->board = new Board(QPixmap(":/board.png"));
+    board->setScene(this->scene);
+    scene->addItem( board );
 
 	// The scene has infinite size, but we want it has the same size than the view
 	// This stops the weird behavior of the autoscroll feature of the view being smaller than the

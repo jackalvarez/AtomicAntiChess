@@ -32,7 +32,8 @@ HEADERS += \
     Game.h \
     Score.h \
     Piece.h \
-    Board.h
+    Board.h \
+    Pawn.h
 
 SOURCES += \
     main.cpp \

@@ -1,4 +1,4 @@
-#include <ctype>
+#include <cctype>
 
 #include "Piece.h"
 
@@ -21,13 +21,13 @@ class Pawn : public Piece
 		{
 			// If this is the pawns first move, it can move twice
 			if ( isFirstMove() )
-				possibleMoves.push_back( COORDINATES(currentPosition.row+(2*direction), currentPosition.file) );
+                possibleMoves.push_back( COORDINATE(currentPosition.row+(2*direction), currentPosition.file) );
 			if ( isFree(currentPosition.row+direction, currentPosition.file))
-				possibleMoves.push_back( COORDINATES(currentPosition.row+direction, currentPosition.file) );
+                possibleMoves.push_back( COORDINATE(currentPosition.row+direction, currentPosition.file) );
 			if ( isEnemy(currentPosition.row+direction, currentPosition.file+1) ) 
-				possibleMoves.push_back( COORDINATES(currentPosition.row+direction, currentPosition.file+1) );
+                possibleMoves.push_back( COORDINATE(currentPosition.row+direction, currentPosition.file+1) );
 			if ( isEnemy(currentPosition.row+direction, currentPosition.file-1) ) 
-				possibleMoves.push_back( COORDINATES(currentPosition.row+direction, currentPosition.file-1) );
+                possibleMoves.push_back( COORDINATE(currentPosition.row+direction, currentPosition.file-1) );
 		}
 
 		return possibleMoves;

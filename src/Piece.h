@@ -37,8 +37,9 @@ protected:
 
 public:
 
-    explicit Piece(char symbol, Piece*** board, QGraphicsItem* parent = nullptr)
+    explicit Piece(char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr)
         : symbol { symbol }
+        , currentPosition { currentPosition }
         , board { board }
         , QGraphicsSvgItem { parent }
         
