@@ -6,18 +6,20 @@
 #include <QGraphicsSvgItem>
 #include <QPropertyAnimation>
 
-
+/// Struct that stores the row and file of a cell in the board.
 struct COORDINATE
 {
     short row;
     short file;
 
+    // Conversion constructor
     COORDINATE(short row = 0, short file = 0)
     : row { row }
     , file { file }
     {}
 };
 
+// The piece has public inheritance from QGraphicsSvgItem
 class Piece : public QGraphicsSvgItem
 {
     Q_OBJECT
@@ -26,23 +28,35 @@ class Piece : public QGraphicsSvgItem
     //Q_DISABLE_COPY(Piece)
 
 protected:
-	#ifdef SECOND_COMMIT
-	short health;
-	short explosionDamage;
-	#endif
 
+    /// The piece has to know its current position in the board
 	COORDINATE currentPosition;
 
+    /* Struct that  stores two arrays,  each with different types
+    *  of moves. The first one, "commutingMoves",  are moves that
+    *  the piece can make to an empty cell. The other, "capturing
+    *  "moves", are moves when the piece moves and captures a pie
+    *  ce in another cell.
+    */ 
     struct MoveTypes
     {
         std::vector<COORDINATE> commutingMoves;
         std::vector<COORDINATE> capturingMoves;       
     };
 
-    MoveTypes possibleMoves;
+    /// The symbol of the piece ( 'K','Q','R','B','N','P', etc).
 	char symbol;
+
+    /// A matrix that contains pointers to the pieces in the game.
     Piece*** board;
+
+    //
     QPropertyAnimation* moveAnimation = nullptr;
+
+    #ifdef SECOND_COMMIT
+    short health;
+    short explosionDamage;
+    #endif
 
 public:
 
