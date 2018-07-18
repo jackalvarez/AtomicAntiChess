@@ -31,17 +31,31 @@ private:
 	 * mean there is a black pawn between the white king and a white night.	
 	*/
     Piece*** boardState;
+
     QGraphicsScene* scene;
     /// Parsers the assets svg file
     QSvgRenderer* svgRenderer = nullptr;
     Piece* selectedPiece = nullptr;
+
 public:
 	// Constructor. Creates the board for a game in the starting position.
     explicit Board(const QPixmap& pixmap, QGraphicsItem* parent = nullptr);
 
     ~Board();
+
 	// Makes sure that a given move is done an the board state is changed
 	void makeMove();
+
+	/*! 
+    * @brief Explodes all the pieces surrounding a given cell.
+    * @details After a capture is made, this method is called so that all the
+    *		   pieces whithin one piece radius from the capturing square, are
+    *	       removed from the board. The board state will then have nullptr
+    *		   in those cells.
+    * @param captureRow The row where the capture was made.
+    * @param captureFile The file where the capture was made.
+    */
+	void explode(short captureRow, short captureFile);
 	
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 

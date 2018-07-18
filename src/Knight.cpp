@@ -11,7 +11,7 @@ Knight::Knight( char symbol, COORDINATE currentPosition, Piece*** board, QGraphi
 
 std::vector<COORDINATE> Knight::getPossibleMoves()
 {
-	std::vector<COORDINATE> possibleMoves;
+	MoveTypes possibleMoves;
 
     short x[] = { -2,-1,1,2,2,1,-1,-2 };
     short y[] = { -1,-2,-2,-1,1,2,2,1 };
@@ -21,8 +21,10 @@ std::vector<COORDINATE> Knight::getPossibleMoves()
     	short newX = currentPosition.row + x[direction];
     	short newY = currentPosition.file + y[direction];
 
-    	if ( isFree(newX, newY)  || isEnemy(newX, newY) ) 
-    		possibleMoves.push_back( COORDINATE(newX, newY) );
+    	if ( isFree(newX, newY) ) 
+            possibleMoves.commutingMoves.push_back( COORDINATE(newX, newY) );
+        else if ( isEnemy(newX, newY) )
+            possibleMoves.capturingMoves.push_back( COORDINATE(newX, newY) );
     }
 
     return possibleMoves;

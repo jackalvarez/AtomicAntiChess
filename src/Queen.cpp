@@ -10,7 +10,7 @@ Queen::Queen( char symbol, COORDINATE currentPosition, Piece*** board, QGraphics
 }
 
 /*! 
-* @brief Determine all the possible cells to which a given
+* @details Determine all the possible cells to which a given
 *	     queen can move. The queen is capable of moving both
 *		 as a rook and as a bishop (i.d., vertically, horizontally
 *		 and diagonally), so it checks for rook and bishop's moves.
@@ -19,7 +19,7 @@ Queen::Queen( char symbol, COORDINATE currentPosition, Piece*** board, QGraphics
 std::vector<COORDINATE> Queen::getPossibleMoves()
 {
 	// Store all the possible valid moves for the queen
-    std::vector<COORDINATE> possibleMoves;
+    MoveTypes possibleMoves;
 
     // Stores the directions in which the queen can move
     short xArray[] = { 1,0,-1,0,-1,1,1,-1 };

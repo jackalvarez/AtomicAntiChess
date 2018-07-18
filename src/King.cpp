@@ -11,7 +11,7 @@ King::King( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsIt
 
 std::vector<COORDINATE> King::getPossibleMoves()
 {
-    std::vector<COORDINATE> possibleMoves;
+    MoveTypes possibleMoves;
 
     short x[] = { 1,1,0,-1,-1,-1,0,1 };
     short y[] = { 0,1,1,1,0,-1,-1,-1 };
@@ -21,8 +21,10 @@ std::vector<COORDINATE> King::getPossibleMoves()
     	short newX = currentPosition.row + x[direction];
     	short newY = currentPosition.file + y[direction];
 
-    	if ( isFree(newX, newY)  || isEnemy(newX, newY) ) 
-    		possibleMoves.push_back( COORDINATE(newX, newY) );
+    	if ( isFree(newX, newY) ) 
+    		possibleMoves.commutingMoves.push_back( COORDINATE(newX, newY) );
+        else if ( isEnemy(newX, newY) )
+            possibleMoves.capturingMoves.push_back( COORDINATE(newX, newY) );
     }
 
     return possibleMoves;

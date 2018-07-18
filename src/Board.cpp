@@ -99,6 +99,23 @@ void Board::addPiecesToScene()
 #endif
 }
 
+void explode(short captureRow, short captureFile)
+{
+    // Loops within one piece radius from the capturing square horizontally 
+    for ( int row = captureRow - 1; row <= captureRow + 1; ++row )
+    {
+        if ( row >= 0 && row < 8)
+        {
+            // Loops within one piece radius from the capturing square horizontally 
+            for ( int file = captureFile - 1; row <= captureFile + 1; ++file )
+            {
+                if ( file >= 0 && file < 8)
+                    delete[] boardState[row][file];
+            }
+        }
+    }
+}
+
 void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     int colPos = filePosition( event->pos().x() ), rowPos = rowPosition( event->pos().y() );

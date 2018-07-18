@@ -32,7 +32,14 @@ protected:
 	#endif
 
 	COORDINATE currentPosition;
-	std::vector<COORDINATE> possibleMoves;
+
+    struct MoveTypes
+    {
+        std::vector<COORDINATE> commutingMoves;
+        std::vector<COORDINATE> capturingMoves;       
+    };
+
+    MoveTypes possibleMoves;
 	char symbol;
     Piece*** board;
     QPropertyAnimation* moveAnimation = nullptr;
