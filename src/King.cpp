@@ -13,8 +13,8 @@ std::vector<COORDINATE> King::getPossibleMoves()
 {
     std::vector<COORDINATE> possibleMoves;
 
-    int x[] = { 1,1,0,-1,-1,-1,0,1 };
-    int y[] = { 0,1,1,1,0,-1,-1,-1 };
+    short x[] = { 1,1,0,-1,-1,-1,0,1 };
+    short y[] = { 0,1,1,1,0,-1,-1,-1 };
 
     for ( int direction = 0; direction < 8; ++direction)
     {
