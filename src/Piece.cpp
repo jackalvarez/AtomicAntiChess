@@ -5,7 +5,7 @@
 bool Piece::isEnemy( short row, short file)
 {
     // If it is out of boundaries
-    if ( row < 0 || row > 7 || file < 0 || file > 7)
+    if ( row < 0 || row > 7 || file < 0 || file > 7 || board[row][file] == nullptr)
         return false;
 
     // If the piece is black, check if the cell is upper case
@@ -29,7 +29,7 @@ bool Piece::isFree( short row, short file)
 void Piece::move(QPointF newPosition)
 {
     this->moveAnimation = new QPropertyAnimation(this, "pos");
-    this->moveAnimation->setStartValue(QPointF(0,0));
+    this->moveAnimation->setStartValue(QPointF(pos().x(), pos().y()));
     this->moveAnimation->setEndValue(newPosition);
 
     // Start the animation

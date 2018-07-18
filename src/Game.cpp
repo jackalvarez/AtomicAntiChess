@@ -58,13 +58,6 @@ int Game::run()
 	this->scene->addItem(this->score);
 #endif
 
-#if 0
-    // Create the player control
-    this->player = new Player();
-	this->player->setSharedRenderer(svgRenderer);
-	this->scene->addItem(this->player);
-    this->player->setInitialPos();
-#endif
     /*
 	// Launch an enemy periodically
 	QTimer* timer = new QTimer(this);

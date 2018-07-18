@@ -31,11 +31,11 @@ std::vector<COORDINATE> Pawn::getPossibleMoves()
 bool Pawn::isFirstMove()
 {
     // If the white pawn is in its starting position
-    if ( this->symbol == 'P' && currentPosition.row == 1)
+    if ( this->symbol == 'P' && currentPosition.row == 6)
         return true;
 
     // If black pawn is in its starting position
-    if ( this->symbol == 'p' && currentPosition.row == 6)
+    if ( this->symbol == 'p' && currentPosition.row == 1)
         return true;
 
     return false;

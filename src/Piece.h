@@ -94,6 +94,11 @@ public:
     #endif
 
     inline char getSymbol() const { return this->symbol; }
+
+    inline int currentX() const { return currentPosition.file; }
+    inline int currentY() const { return currentPosition.row; }
+
+    inline void setPosition(COORDINATE newPosition) { currentPosition = newPosition; }
 };
 
 

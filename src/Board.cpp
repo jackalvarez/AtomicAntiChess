@@ -25,17 +25,20 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
 	{
         boardState[row] = new Piece*[8];
 
-		// Fills the rows of the black pawns
-		if ( row == 6 || row == 1)
-		{
-			for ( int col = 0; col < 8; ++col)
+
+        for ( int col = 0; col < 8; ++col)
+        {
+            // Fills the rows of the black pawns
+            if ( row == 6 || row == 1)
             {
                 boardState[row][col] = ( row == 6 ? new Pawn('P', COORDINATE(6, col), boardState) :
                                                   new Pawn('p', COORDINATE(1, col), boardState) );
                 if(boardState[row][col])
                     boardState[row][col]->setSharedRenderer(svgRenderer);
             }
-		}
+            else if(row != 0 && row != 7)
+                boardState[row][col] = nullptr;
+        }
 	}
 
 	// Fill the rows 0 and 7 with the corresponding pieces
@@ -98,7 +101,35 @@ void Board::addPiecesToScene()
 
 void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    std::cerr << "Board(" << filePosition( event->pos().x() ) << ", " << rowPosition( event->pos().y() ) << ")\n";
+    int colPos = filePosition( event->pos().x() ), rowPos = rowPosition( event->pos().y() );
+    std::cerr << "Board(" << colPos << ", " << rowPos << ") ";
+    // If there's a selected piece, then the player will try to make a move
+    if(selectedPiece)
+    {
+        bool validMove = false;
+        std::vector<COORDINATE> validMoves = selectedPiece->getPossibleMoves();
+        std::cerr << validMoves.size();
+        for(int index = 0; index < validMoves.size() && !validMove; ++index)
+        {
+            if(colPos == validMoves[index].file && rowPos == validMoves[index].row)
+            {
+                selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
+                boardState[rowPos][colPos] = selectedPiece;
+                selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
+                boardState[rowPos][colPos]->setPosition(COORDINATE(rowPos, colPos));
+                validMove = true;
+            }
+        }
+    }
+    // If not, the player is trying to select a piece to move
+    else
+    {
+        // If the cell has a Piece, it keeps the pointer, else, it will have a nullptr.
+        selectedPiece = boardState[rowPos][colPos];
+        if(selectedPiece)
+            std::cerr << "selected a piece";
+    }
+    std::cerr << std::endl;
 }
 
 int Board::filePosition(qreal x) const

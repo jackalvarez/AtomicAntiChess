@@ -34,7 +34,7 @@ private:
     QGraphicsScene* scene;
     /// Parsers the assets svg file
     QSvgRenderer* svgRenderer = nullptr;
-
+    Piece* selectedPiece = nullptr;
 public:
 	// Constructor. Creates the board for a game in the starting position.
     explicit Board(const QPixmap& pixmap, QGraphicsItem* parent = nullptr);
