@@ -69,6 +69,8 @@ public:
 	#endif
 
     inline char getSymbol() const { return this->symbol; }
+
+    bool isFree(short row, short file);
 };
 
 

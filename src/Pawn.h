@@ -12,14 +12,6 @@ class Pawn : public Piece
     std::vector<COORDINATE> getPossibleMoves();
 
     bool isFirstMove();
-
-    inline bool isFree( short row, short column)
-    {
-
-        return this->board[row][column] == nullptr;
-    }
-
-    bool isEnemy( short row, short column);
 };
 
 #endif // PAWN_H
