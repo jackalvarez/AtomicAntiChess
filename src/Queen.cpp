@@ -11,6 +11,7 @@ Queen::Queen( char symbol, COORDINATE currentPosition, Piece*** board, QGraphics
 
 std::vector<COORDINATE> Queen::getPossibleMoves()
 {
-    return nullptr;
+    std::vector<COORDINATE> possibleMoves;
+    return possibleMoves;
 }
 

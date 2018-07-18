@@ -17,3 +17,13 @@ bool Piece::isFree( short row, short file)
 		return false;
 	return (this->board[row][file] == nullptr);
 }
+
+void Piece::move(QPointF newPosition)
+{
+    this->moveAnimation = new QPropertyAnimation(this, "pos");
+    this->moveAnimation->setStartValue(QPointF(0,0));
+    this->moveAnimation->setEndValue(newPosition);
+
+    // Start the animation
+    this->moveAnimation->start();
+}

@@ -11,6 +11,7 @@ Rook::Rook( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsIt
 
 std::vector<COORDINATE> Rook::getPossibleMoves()
 {
-    return nullptr;
+    std::vector<COORDINATE> possibleMoves;
+    return possibleMoves;
 }
 

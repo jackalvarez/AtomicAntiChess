@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <QGraphicsSvgItem>
+#include <QPropertyAnimation>
 
 
 struct COORDINATE
@@ -34,6 +35,7 @@ protected:
 	std::vector<COORDINATE> possibleMoves;
 	char symbol;
     Piece*** board;
+    QPropertyAnimation* moveAnimation = nullptr;
 
 public:
 
@@ -70,7 +72,11 @@ public:
 
     inline char getSymbol() const { return this->symbol; }
 
+    bool isEnemy( short row, short file);
+
     bool isFree(short row, short file);
+
+    void move(QPointF newPosition);
 };
 
 

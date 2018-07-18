@@ -1,7 +1,7 @@
 #include "Piece.h"
 
-#ifndef ROOK.H
-#define ROOK.H
+#ifndef ROOK_H
+#define ROOK_H
 
 
 class Rook : public Piece
@@ -12,4 +12,4 @@ class Rook : public Piece
     std::vector<COORDINATE> getPossibleMoves();
 };
 
-#endif // ROOK.H
+#endif // ROOK_H

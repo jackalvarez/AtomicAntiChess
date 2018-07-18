@@ -5,7 +5,8 @@
 Pawn::Pawn( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    setElementId( QString("%1Pawn").arg(/*color*/ "Black") );
+    QString color = (islower(symbol)) ? "Black" : "White";
+    setElementId( QString("%1Pawn").arg(color) );
 }
 
 std::vector<COORDINATE> Pawn::getPossibleMoves()

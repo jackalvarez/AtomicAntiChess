@@ -1,10 +1,17 @@
 #include "Board.h"
+#include "Pawn.h"
+#include "King.h"
+#include "Queen.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Knight.h"
+
 #include <iostream>
 
-#include "Pawn.h"
+#include <QPointF>
 
-#define SET_PIECES(row, file, representationCharacter) \
-    boardState[ (row) ][ (file) ] = new Piece( (representationCharacter), \
+#define SET_PIECES(row, file, representationCharacter, pieceType) \
+    boardState[ (row) ][ (file) ] = new pieceType ( (representationCharacter), \
     COORDINATE( (row), (file) ), boardState); \
     boardState[ (row) ][ (file) ]->setSharedRenderer(svgRenderer)
 
@@ -34,26 +41,26 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
 	// Fill the rows 0 and 7 with the corresponding pieces
 
 	// Black rooks
-    SET_PIECES(0, 0, 'r'); SET_PIECES(0, 7, 'r');
+    SET_PIECES(0, 0, 'r', Rook); SET_PIECES(0, 7, 'r', Rook);
 	// Black knights
-    SET_PIECES(0, 1, 'n'); SET_PIECES(0, 6, 'n');
+    SET_PIECES(0, 1, 'n', Knight); SET_PIECES(0, 6, 'n', Knight);
 	// Black bishops
-    SET_PIECES(0, 2, 'b'); SET_PIECES(0, 5, 'b');
+    SET_PIECES(0, 2, 'b', Bishop); SET_PIECES(0, 5, 'b', Bishop);
 	// Black queen
-    SET_PIECES(0, 3, 'q');
+    SET_PIECES(0, 3, 'q', Queen);
 	// Black king
-    SET_PIECES(0, 4, 'k');
+    SET_PIECES(0, 4, 'k', King);
 
 	// White rooks
-    SET_PIECES(7, 0, 'R'); SET_PIECES(7, 7, 'R');
+    SET_PIECES(7, 0, 'R', Rook); SET_PIECES(7, 7, 'R', Rook);
 	// White knights
-    SET_PIECES(7, 1, 'N'); SET_PIECES(7, 6, 'N');
+    SET_PIECES(7, 1, 'N', Knight); SET_PIECES(7, 6, 'N', Knight);
 	// White bishops
-    SET_PIECES(7, 2, 'B'); SET_PIECES(7, 5, 'B');
+    SET_PIECES(7, 2, 'B', Bishop); SET_PIECES(7, 5, 'B', Bishop);
 	// White queen
-    SET_PIECES(7, 3, 'Q');
+    SET_PIECES(7, 3, 'Q', Queen);
 	// White king
-    SET_PIECES(7, 4, 'K');
+    SET_PIECES(7, 4, 'K', King);
 }
 
 Board::~Board()
@@ -70,12 +77,23 @@ void Board::setScene(QGraphicsScene* scene)
 
 void Board::addPiecesToScene()
 {
-    /*for(int index = 0; index < 8; ++index)
-        this->scene->addItem(boardState[1][index]);
-    for(int index = 0; index < 8; ++index)
-        this->scene->addItem(boardState[2][index]);*/
-    boardState[6][0]->setPos(55,10);
-    this->scene->addItem(boardState[6][0]);
+#if 1
+    for ( int row = 7; row >= 0; --row )
+    {
+        if ( row >= 6 || row <= 1)
+        {
+            for ( int col = 0; col < 8; ++col)
+            {
+                boardState[row][col]->setPos(fromCellPosToQPointF(row, col));
+                this->scene->addItem(boardState[row][col]);
+            }
+        }
+    }
+#endif
+#if 0
+    boardState[1][0]->setPos(100, 97);
+    scene->addItem(boardState[1][0]);
+#endif
 }
 
 void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -95,4 +113,10 @@ int Board::rowPosition(qreal y) const
 int Board::cell(qreal position, qreal dimension) const
 {
     return position / (dimension / 8);
+}
+
+QPointF Board::fromCellPosToQPointF(int row, int col) const
+{
+    qreal rowDimension = scene->height() / 8, colDimension = scene->width() / 8;
+    return QPointF( 0 + (col * colDimension), 0 + (row * rowDimension) );
 }

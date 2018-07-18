@@ -1,6 +1,6 @@
-King.cpp#include <cctype>
+#include <cctype>
 
-#include "KING.h"
+#include "King.h"
 
 King::King( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)

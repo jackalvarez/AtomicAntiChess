@@ -1,6 +1,6 @@
 #include <cctype>
 
-#include "KNIGHT.H"
+#include "Knight.h"
 
 Knight::Knight( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
@@ -11,5 +11,6 @@ Knight::Knight( char symbol, COORDINATE currentPosition, Piece*** board, QGraphi
 
 std::vector<COORDINATE> Knight::getPossibleMoves()
 {
-    return nullptr;
+    std::vector<COORDINATE> possibleMoves;
+    return possibleMoves;
 }

@@ -1,9 +1,7 @@
-KNIGHT.H
-
 #include "Piece.h"
 
-#ifndef KNIGHT.H
-#define KNIGHT.H
+#ifndef KNIGHT_H
+#define KNIGHT_H
 
 
 class Knight : public Piece
@@ -14,4 +12,4 @@ class Knight : public Piece
     std::vector<COORDINATE> getPossibleMoves();
 };
 
-#endif // KNIGHT.H
+#endif // KNIGHT_H

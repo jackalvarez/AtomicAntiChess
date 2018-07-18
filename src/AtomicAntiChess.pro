@@ -33,7 +33,12 @@ HEADERS += \
     Score.h \
     Piece.h \
     Board.h \
-    Pawn.h
+    Pawn.h \
+    Rook.h \
+    Queen.h \
+    Knight.h \
+    King.h \
+    Bishop.h
 
 SOURCES += \
     main.cpp \
@@ -41,7 +46,12 @@ SOURCES += \
     Game.cpp \
     Piece.cpp \
     Pawn.cpp \
-    Board.cpp
+    Board.cpp \
+    Rook.cpp \
+    Queen.cpp \
+    Knight.cpp \
+    King.cpp \
+    Bishop.cpp
 
 RESOURCES += \
     ../Assets/assets.qrc

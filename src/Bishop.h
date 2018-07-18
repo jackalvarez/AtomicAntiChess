@@ -1,7 +1,7 @@
 #include "Piece.h"
 
-#ifndef BISHOP.H
-#define BISHOP.H
+#ifndef BISHOP_H
+#define BISHOP_H
 
 
 class Bishop : public Piece
@@ -12,4 +12,4 @@ class Bishop : public Piece
     std::vector<COORDINATE> getPossibleMoves();
 };
 
-#endif // BISHOP.H
+#endif // BISHOP_H

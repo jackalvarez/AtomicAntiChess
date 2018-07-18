@@ -1,7 +1,7 @@
 #include "Piece.h"
 
-#ifndef KING.h
-#define KING.h
+#ifndef KING_H
+#define KING_H
 
 
 class King : public Piece
@@ -12,4 +12,4 @@ class King : public Piece
     std::vector<COORDINATE> getPossibleMoves();
 };
 
-#endif // KING.h
+#endif // KING_H

@@ -1,6 +1,6 @@
 #include <cctype>
 
-#include "BISHOP.H"
+#include "Bishop.h"
 
 Bishop::Bishop( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
@@ -11,6 +11,7 @@ Bishop::Bishop( char symbol, COORDINATE currentPosition, Piece*** board, QGraphi
 
 std::vector<COORDINATE> Bishop::getPossibleMoves()
 {
-    return nullptr;
+    std::vector<COORDINATE> possibleMoves;
+    return possibleMoves;
 }
 

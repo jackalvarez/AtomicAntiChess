@@ -52,6 +52,7 @@ public:
     int filePosition(qreal x) const;
     int rowPosition(qreal y) const;
     int cell(qreal position, qreal dimension) const;
+    QPointF fromCellPosToQPointF(int row, int col) const;
 private:
 
 };
