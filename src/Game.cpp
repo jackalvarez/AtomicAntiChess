@@ -37,10 +37,11 @@ int Game::run()
   #endif
 
 	// Set a black color background or add an image as a background
-	this->view->setBackgroundBrush(QBrush(Qt::black, Qt::SolidPattern));
+    this->view->setBackgroundBrush(QBrush(Qt::white, Qt::Dense5Pattern));
     this->board = new Board(QPixmap(":/board.png"));
     board->setScene(this->scene);
     scene->addItem( board );
+    board->addPiecesToScene();
 
 	// The scene has infinite size, but we want it has the same size than the view
 	// This stops the weird behavior of the autoscroll feature of the view being smaller than the
@@ -56,8 +57,6 @@ int Game::run()
 	this->score->setPos(5, 0);
 	this->scene->addItem(this->score);
 #endif
-	// Load the graphic resources
-    this->svgRenderer = new QSvgRenderer(QString("://Graphics_map.svg"), this);
 
 #if 0
     // Create the player control

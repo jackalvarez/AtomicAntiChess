@@ -1,12 +1,14 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QSvgRenderer>
 
 #include <vector>
 
 #include "Piece.h"
+
 
 #define SECOND_COMMIT 0
 
@@ -30,6 +32,8 @@ private:
 	*/
     Piece*** boardState;
     QGraphicsScene* scene;
+    /// Parsers the assets svg file
+    QSvgRenderer* svgRenderer = nullptr;
 
 public:
 	// Constructor. Creates the board for a game in the starting position.
@@ -42,6 +46,8 @@ public:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
     void setScene(QGraphicsScene* scene);
+
+    void addPiecesToScene();
 
     int filePosition(qreal x) const;
     int rowPosition(qreal y) const;

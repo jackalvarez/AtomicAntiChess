@@ -4,7 +4,6 @@
 #include <QApplication>
 
 class QGraphicsScene;
-class QSvgRenderer;
 class QGraphicsView;
 class Player;
 class Score;
@@ -24,8 +23,7 @@ class Game : public QApplication
     QGraphicsView* view;
 	/// Shows the score on the screen to the player
 	Score* score;
-	/// Parsers the assets svg file
-	QSvgRenderer* svgRenderer = nullptr;
+
     /// Keeps pointers to the pieces
     Board* board;
 

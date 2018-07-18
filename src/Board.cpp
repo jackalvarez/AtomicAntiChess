@@ -5,12 +5,15 @@
 
 #define SET_PIECES(row, file, representationCharacter) \
     boardState[ (row) ][ (file) ] = new Piece( (representationCharacter), \
-    COORDINATE( (row), (file) ), boardState)
+    COORDINATE( (row), (file) ), boardState); \
+    boardState[ (row) ][ (file) ]->setSharedRenderer(svgRenderer)
 
 Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
     : QGraphicsPixmapItem (pixmap, parent)
     , boardState { new Piece**[8] }
 {
+    // Load the graphic resources
+    this->svgRenderer = new QSvgRenderer(QString("://Graphics_map.svg"));
 	for ( int row = 7; row >= 0; --row )
 	{
         boardState[row] = new Piece*[8];
@@ -19,8 +22,12 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
 		if ( row == 6 || row == 1)
 		{
 			for ( int col = 0; col < 8; ++col)
+            {
                 boardState[row][col] = ( row == 6 ? new Pawn('P', COORDINATE(6, col), boardState) :
                                                   new Pawn('p', COORDINATE(1, col), boardState) );
+                if(boardState[row][col])
+                    boardState[row][col]->setSharedRenderer(svgRenderer);
+            }
 		}
 	}
 
@@ -59,6 +66,16 @@ Board::~Board()
 void Board::setScene(QGraphicsScene* scene)
 {
     this->scene = scene;
+}
+
+void Board::addPiecesToScene()
+{
+    /*for(int index = 0; index < 8; ++index)
+        this->scene->addItem(boardState[1][index]);
+    for(int index = 0; index < 8; ++index)
+        this->scene->addItem(boardState[2][index]);*/
+    boardState[6][0]->setPos(55,10);
+    this->scene->addItem(boardState[6][0]);
 }
 
 void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
