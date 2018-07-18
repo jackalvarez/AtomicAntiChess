@@ -5,8 +5,8 @@
 class Pawn : public Piece
 {
   public:
-    Pawn( Piece** board)
-        : Piece { board }
+    Pawn( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr)
+        : Piece (symbol, currentPosition, board, parent)
     {
         setElementId( QString("%1Pawn").arg(/*color*/ "White") );
     }
