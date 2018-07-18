@@ -1,6 +1,7 @@
 #include "Board.h"
 #include <iostream>
 
+#include "Pawn.h"
 
 #define SET_PIECES(row, file, representationCharacter) \
     boardState[ (row) ][ (file) ] = new Piece( (representationCharacter), \
@@ -18,7 +19,7 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
 		if ( row == 6 || row == 1)
 		{
 			for ( int col = 0; col < 8; ++col)
-                boardState[row][col] = ( (row==6) ? new Pawn('P', COORDINATE(6, col), boardState) :
+                boardState[row][col] = ( row == 6 ? new Pawn('P', COORDINATE(6, col), boardState) :
                                                   new Pawn('p', COORDINATE(1, col), boardState) );
 		}
 	}

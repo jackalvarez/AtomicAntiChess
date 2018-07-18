@@ -56,7 +56,7 @@ public:
         if (deleteObject) this->deleteLater();
     }
 #endif
-    virtual std::vector<COORDINATE> getPossibleMoves(COORDINATE currentPosition)
+    virtual std::vector<COORDINATE> getPossibleMoves()
     {
         std::vector<COORDINATE> possibleMoves;
         return possibleMoves;
