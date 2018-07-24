@@ -10,7 +10,7 @@ Bishop::Bishop( QChar symbol, Coordinates currentPosition, Piece*** board, QGrap
 }
 
 
-QVector<Coordinates> Bishop::getPossibleMoves()
+MoveTypes Bishop::getPossibleMoves()
 {
 	// Store all the possible valid moves for the bishop
     MoveTypes possibleMoves;

@@ -10,7 +10,7 @@ Queen::Queen( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphi
 }
 
 
-QVector<Coordinates> Queen::getPossibleMoves()
+MoveTypes Queen::getPossibleMoves()
 {
 	// Store all the possible valid moves for the queen
     MoveTypes possibleMoves;

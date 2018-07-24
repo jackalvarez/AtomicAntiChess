@@ -10,7 +10,7 @@ Rook::Rook( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphics
 }
 
 
-QVector<Coordinates> Rook::getPossibleMoves()
+MoveTypes Rook::getPossibleMoves()
 {
     // Store all the possible valid moves for the rook
     MoveTypes possibleMoves;

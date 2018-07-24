@@ -9,7 +9,7 @@ Knight::Knight( QChar symbol, Coordinates currentPosition, Piece*** board, QGrap
     setElementId( QString("%1Knight").arg(color) );
 }
 
-QVector<Coordinates> Knight::getPossibleMoves()
+MoveTypes Knight::getPossibleMoves()
 {
 	MoveTypes possibleMoves;
 

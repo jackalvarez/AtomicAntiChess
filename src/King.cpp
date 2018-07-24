@@ -9,7 +9,7 @@ King::King( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphics
     setElementId( QString("%1King").arg(color) );
 }
 
-QVector<Coordinates> King::getPossibleMoves()
+MoveTypes King::getPossibleMoves()
 {
     MoveTypes possibleMoves;
 

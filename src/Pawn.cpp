@@ -10,7 +10,7 @@ Pawn::Pawn( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphics
 }
 
 
-QVector<Coordinates> Pawn::getPossibleMoves()
+MoveTypes Pawn::getPossibleMoves()
 {
     // Stores all the possible moves for that particular pawn
     MoveTypes possibleMoves;
