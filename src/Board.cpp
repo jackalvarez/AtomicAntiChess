@@ -18,6 +18,8 @@
 Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
     : QGraphicsPixmapItem (pixmap, parent)
     , boardState { new Piece**[8] }
+    , whiteScore { new Score("White", 16, Qt::darkBlue) }
+    , blackScore { new Score("Black", 16, Qt::darkBlue) }
 {
     // Load the graphic resources
     this->svgRenderer = new QSvgRenderer(QString("://Graphics_map.svg"));

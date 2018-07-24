@@ -7,6 +7,7 @@
 #include <QVector>
 
 #include "Piece.h"
+#include "Score.h"
 
 
 #define SECOND_COMMIT 0
@@ -34,7 +35,12 @@ private:
     QGraphicsScene* scene;
     /// Parsers the assets svg file
     QSvgRenderer* svgRenderer = nullptr;
+    ///
     Piece* selectedPiece = nullptr;
+    ///
+    Score* whiteScore = nullptr;
+    ///
+    Score* blackScore = nullptr;
 
 public:
 	// Constructor. Creates the board for a game in the starting position.

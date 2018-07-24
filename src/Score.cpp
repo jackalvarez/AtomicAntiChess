@@ -31,5 +31,5 @@ void Score::decrease(int amount)
 
 void Score::updateScore()
 {
-	setPlainText( QString("%1: %2").arg(legend).arg(score) );
+    setPlainText( QString("%1 pieces left: %2").arg(legend).arg(score) );
 }

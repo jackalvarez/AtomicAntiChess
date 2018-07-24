@@ -38,7 +38,8 @@ HEADERS += \
     Queen.h \
     Knight.h \
     King.h \
-    Bishop.h
+    Bishop.h \
+    ChessManager.h
 
 SOURCES += \
     main.cpp \
@@ -51,7 +52,8 @@ SOURCES += \
     Queen.cpp \
     Knight.cpp \
     King.cpp \
-    Bishop.cpp
+    Bishop.cpp \
+    ChessManager.cpp
 
 RESOURCES += \
     ../Assets/assets.qrc
