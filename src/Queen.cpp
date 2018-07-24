@@ -2,10 +2,10 @@
 
 #include "Queen.h"
 
-Queen::Queen( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
+Queen::Queen( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    QString color = (islower(symbol)) ? "Black" : "White"; 
+    QString color = (isLower(symbol)) ? "Black" : "White";
     setElementId( QString("%1Queen").arg(color) );
 }
 
@@ -16,7 +16,7 @@ Queen::Queen( char symbol, COORDINATE currentPosition, Piece*** board, QGraphics
 *		 and diagonally), so it checks for rook and bishop's moves.
 * @return a MoveTypes struct with all the moves that the queen can do.
 */
-std::vector<COORDINATE> Queen::getPossibleMoves()
+QVector<Coordinates> Queen::getPossibleMoves()
 {
 	// Store all the possible valid moves for the queen
     MoveTypes possibleMoves;
@@ -36,7 +36,7 @@ std::vector<COORDINATE> Queen::getPossibleMoves()
         while( x>=0 && x<8 && y>=0 && y<8 && isFree(x, y))
         {
         	// The move is valid, add it to possibleMoves
-            possibleMoves.push_back( COORDINATE(x, y) );
+            possibleMoves.push_back( Coordinates(x, y) );
 
             // Move the queen once more in the same direction
             x += xArray[direction]; y += yArray[direction];
@@ -44,7 +44,7 @@ std::vector<COORDINATE> Queen::getPossibleMoves()
 
         // If the last cell wasn't free, but instead had an enemy
         if( isEnemy(x,y) )
-            possibleMoves.push_back( COORDINATE(x, y) );
+            possibleMoves.push_back( Coordinates(x, y) );
     }
 
     // Return all the possible valid moves the queen could make

@@ -7,9 +7,9 @@
 class Bishop : public Piece
 {
   public:
-    Bishop( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
+    Bishop( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    std::vector<COORDINATE> getPossibleMoves();
+    QVector<Coordinates> getPossibleMoves();
 };
 
 #endif // BISHOP_H

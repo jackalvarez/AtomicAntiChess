@@ -7,9 +7,9 @@
 class Queen : public Piece
 {
   public:
-    Queen( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
+    Queen( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    std::vector<COORDINATE> getPossibleMoves();
+    QVector<Coordinates> getPossibleMoves();
 };
 
 #endif // QUEEN_H

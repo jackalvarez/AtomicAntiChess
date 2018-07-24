@@ -2,10 +2,10 @@
 
 #include "Bishop.h"
 
-Bishop::Bishop( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
+Bishop::Bishop( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    QString color = (islower(symbol)) ? "Black" : "White"; 
+    QString color = (isLower(symbol)) ? "Black" : "White";
     setElementId( QString("%1Bishop").arg(color) );
 }
 
@@ -16,7 +16,7 @@ Bishop::Bishop( char symbol, COORDINATE currentPosition, Piece*** board, QGraphi
 *		  do moving to the upper left, upper right, lower left 
 *		  and lower right.
 */
-std::vector<COORDINATE> Bishop::getPossibleMoves()
+QVector<Coordinates> Bishop::getPossibleMoves()
 {
 	// Store all the possible valid moves for the bishop
     MoveTypes possibleMoves;
@@ -36,7 +36,7 @@ std::vector<COORDINATE> Bishop::getPossibleMoves()
     	while( x>=0 && x<8 && y>=0 && y<8 && isFree(x, y))
     	{
     		// The move is valid, add it to possibleMoves
-    		possibleMoves.commutingMoves.push_back( COORDINATE(x, y) );
+            possibleMoves.commutingMoves.push_back( Coordinates(x, y) );
 
     		// Move the bishop once more in the same direction
     		x += xArray[direction]; y += yArray[direction];
@@ -44,7 +44,7 @@ std::vector<COORDINATE> Bishop::getPossibleMoves()
 
     	// If the last cell wasn't free, but instead had an enemy
     	if( isEnemy(x,y) )
-    		possibleMoves.capturingMoves.push_back( COORDINATE(x, y) );
+            possibleMoves.capturingMoves.push_back( Coordinates(x, y) );
     }
 
     // Return all the possible valid moves the bishop could make

@@ -1,19 +1,19 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include <vector>
-
+#include <QChar>
 #include <QGraphicsSvgItem>
 #include <QPropertyAnimation>
+#include <QVector>
 
 /// Struct that stores the row and file of a cell in the board.
-struct COORDINATE
+struct Coordinates
 {
     short row;
     short file;
 
     // Conversion constructor
-    COORDINATE(short row = 0, short file = 0)
+    Coordinates(short row = 0, short file = 0)
     : row { row }
     , file { file }
     {}
@@ -24,13 +24,12 @@ class Piece : public QGraphicsSvgItem
 {
     Q_OBJECT
 
-    //Maybe
-    //Q_DISABLE_COPY(Piece)
+    Q_DISABLE_COPY(Piece)
 
 protected:
 
     /// The piece has to know its current position in the board
-	COORDINATE currentPosition;
+    Coordinates currentPosition;
 
     /* Struct that  stores two arrays,  each with different types
     *  of moves. The first one, "commutingMoves",  are moves that
@@ -40,12 +39,12 @@ protected:
     */ 
     struct MoveTypes
     {
-        std::vector<COORDINATE> commutingMoves;
-        std::vector<COORDINATE> capturingMoves;       
+        QVector<Coordinates> commutingMoves;
+        QVector<Coordinates> capturingMoves;
     };
 
     /// The symbol of the piece ( 'K','Q','R','B','N','P', etc).
-	char symbol;
+    QChar symbol;
 
     /// A matrix that contains pointers to the pieces in the game.
     Piece*** board;
@@ -60,7 +59,7 @@ protected:
 
 public:
 
-    explicit Piece(char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr)
+    explicit Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr)
         : symbol { symbol }
         , currentPosition { currentPosition }
         , board { board }
@@ -79,9 +78,9 @@ public:
         if (deleteObject) this->deleteLater();
     }
 #endif
-    virtual std::vector<COORDINATE> getPossibleMoves()
+    virtual QVector<Coordinates> getPossibleMoves()
     {
-        std::vector<COORDINATE> possibleMoves;
+        QVector<Coordinates> possibleMoves;
         return possibleMoves;
     }
 
@@ -114,12 +113,12 @@ public:
     inline short getDamage();
     #endif
 
-    inline char getSymbol() const { return this->symbol; }
+    inline QChar getSymbol() const { return this->symbol; }
 
     inline int currentX() const { return currentPosition.file; }
     inline int currentY() const { return currentPosition.row; }
 
-    inline void setPosition(COORDINATE newPosition) { currentPosition = newPosition; }
+    inline void setPosition(Coordinates newPosition) { currentPosition = newPosition; }
 };
 
 

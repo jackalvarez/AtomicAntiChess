@@ -31,8 +31,8 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
             // Fills the rows of the black pawns
             if ( row == 6 || row == 1)
             {
-                boardState[row][col] = ( row == 6 ? new Pawn('P', COORDINATE(6, col), boardState) :
-                                                  new Pawn('p', COORDINATE(1, col), boardState) );
+                boardState[row][col] = ( row == 6 ? new Pawn('P', Coordinates(6, col), boardState) :
+                                                  new Pawn('p', Coordinates(1, col), boardState) );
                 if(boardState[row][col])
                     boardState[row][col]->setSharedRenderer(svgRenderer);
             }
@@ -124,7 +124,7 @@ void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if(selectedPiece)
     {
         bool validMove = false;
-        std::vector<COORDINATE> validMoves = selectedPiece->getPossibleMoves();
+        QVector<Coordinates> validMoves = selectedPiece->getPossibleMoves();
         std::cerr << validMoves.size();
         for(int index = 0; index < validMoves.size() && !validMove; ++index)
         {
@@ -133,7 +133,7 @@ void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
                 selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
                 boardState[rowPos][colPos] = selectedPiece;
                 selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
-                boardState[rowPos][colPos]->setPosition(COORDINATE(rowPos, colPos));
+                boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));
                 validMove = true;
             }
         }

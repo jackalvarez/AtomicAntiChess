@@ -7,9 +7,9 @@
 class Pawn : public Piece
 {
   public:
-    Pawn( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
+    Pawn( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    std::vector<COORDINATE> getPossibleMoves();
+    QVector<Coordinates> getPossibleMoves();
 
     bool isFirstMove();
 };

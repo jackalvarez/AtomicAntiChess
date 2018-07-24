@@ -4,8 +4,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
-
-#include <vector>
+#include <QVector>
 
 #include "Piece.h"
 

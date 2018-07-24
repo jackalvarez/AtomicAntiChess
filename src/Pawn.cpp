@@ -2,10 +2,10 @@
 
 #include "Pawn.h"
 
-Pawn::Pawn( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
+Pawn::Pawn( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    QString color = (islower(symbol)) ? "Black" : "White";
+    QString color = (symbol.isLower()) ? "Black" : "White";
     setElementId( QString("%1Pawn").arg(color) );
 }
 
@@ -19,7 +19,7 @@ Pawn::Pawn( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsIt
 *          given pawn, and if so, adds them to the corresponding vectors.
 * @return a MoveTypes struct with all the valid moves that the pawn can do.
 */
-std::vector<COORDINATE> Pawn::getPossibleMoves()
+QVector<Coordinates> Pawn::getPossibleMoves()
 {
     // Stores all the possible moves for that particular pawn
     MoveTypes possibleMoves;
@@ -29,17 +29,17 @@ std::vector<COORDINATE> Pawn::getPossibleMoves()
 
     // If this is the pawns first move, it can move twice front
     if ( isFirstMove() )
-        possibleMoves.commutingMoves.push_back( COORDINATE(currentPosition.row+(2*direction), currentPosition.file) );\
+        possibleMoves.commutingMoves.push_back( Coordinates(currentPosition.row+(2*direction), currentPosition.file) );\
 
     // If the cell in front of the pawn is empty, it can move there
     if ( isFree(currentPosition.row+direction, currentPosition.file))
-        possibleMoves.commutingMoves.push_back( COORDINATE(currentPosition.row+direction, currentPosition.file) );
+        possibleMoves.commutingMoves.push_back( Coordinates(currentPosition.row+direction, currentPosition.file) );
     
     // If there is an enemy to the front diagonals, the pawn can capture it
     if ( isEnemy(currentPosition.row+direction, currentPosition.file+1) )
-        possibleMoves.capturingMoves.push_back( COORDINATE(currentPosition.row+direction, currentPosition.file+1) );
+        possibleMoves.capturingMoves.push_back( Coordinates(currentPosition.row+direction, currentPosition.file+1) );
     if ( isEnemy(currentPosition.row+direction, currentPosition.file-1) )
-        possibleMoves.capturingMoves.push_back( COORDINATE(currentPosition.row+direction, currentPosition.file-1) );
+        possibleMoves.capturingMoves.push_back( Coordinates(currentPosition.row+direction, currentPosition.file-1) );
 
     // TODO: Add the move where a pawn can promote to another piece
     

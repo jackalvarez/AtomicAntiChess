@@ -7,9 +7,9 @@
 class Rook : public Piece
 {
   public:
-    Rook( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
+    Rook( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    std::vector<COORDINATE> getPossibleMoves();
+    QVector<Coordinates> getPossibleMoves();
 };
 
 #endif // ROOK_H

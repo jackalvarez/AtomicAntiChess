@@ -7,9 +7,9 @@
 class King : public Piece
 {
   public:
-    King( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
+    King( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    std::vector<COORDINATE> getPossibleMoves();
+    QVector<Coordinates> getPossibleMoves();
 };
 
 #endif // KING_H

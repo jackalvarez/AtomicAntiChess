@@ -2,10 +2,10 @@
 
 #include "Rook.h"
 
-Rook::Rook( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
+Rook::Rook( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    QString color = (islower(symbol)) ? "Black" : "White"; 
+    QString color = (isLower(symbol)) ? "Black" : "White";
     setElementId( QString("%1Rook").arg(color) );
 }
 
@@ -15,7 +15,7 @@ Rook::Rook( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsIt
 * @return an std::vector with all the moves that the rook can
 *         do, moving up, down, left and right.
 */
-std::vector<COORDINATE> Rook::getPossibleMoves()
+QVector<Coordinates> Rook::getPossibleMoves()
 {
     // Store all the possible valid moves for the rook
     MoveTypes possibleMoves;
@@ -35,7 +35,7 @@ std::vector<COORDINATE> Rook::getPossibleMoves()
         while( x>=0 && x<8 && y>=0 && y<8 && isFree(x, y))
         {
             // The move is valid, add it to possibleMoves
-            possibleMoves.commutingMoves.push_back( COORDINATE(x, y) );
+            possibleMoves.commutingMoves.push_back( Coordinates(x, y) );
 
             // Move the rook once more in the same direction
             x += xArray[direction]; y += yArray[direction];
@@ -43,7 +43,7 @@ std::vector<COORDINATE> Rook::getPossibleMoves()
 
         // If the last cell wasn't free, but instead had an enemy
         if( isEnemy(x,y) )
-            possibleMoves.capturingMoves.push_back( COORDINATE(x, y) );
+            possibleMoves.capturingMoves.push_back( Coordinates(x, y) );
     }
 
     // Return all the possible valid moves the rook could make

@@ -9,11 +9,11 @@ bool Piece::isEnemy( short row, short file)
         return false;
 
     // If the piece is black, check if the cell is upper case
-    if ( islower(this->symbol) )
-        return isupper(board[row][file]->getSymbol());
+    if ( this->symbol.isLower() )
+        return board[row][file]->getSymbol().isUpper();
 
     // Return true if the piece in the cell is the opposite color to this
-    return islower(this->board[row][file]->getSymbol());
+    return this->board[row][file]->getSymbol().isLower();
 }
 
 bool Piece::isFree( short row, short file)

@@ -2,14 +2,14 @@
 
 #include "Knight.h"
 
-Knight::Knight( char symbol, COORDINATE currentPosition, Piece*** board, QGraphicsItem* parent)
+Knight::Knight( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    QString color = (islower(symbol)) ? "Black" : "White"; 
+    QString color = (isLower(symbol)) ? "Black" : "White";
     setElementId( QString("%1Knight").arg(color) );
 }
 
-std::vector<COORDINATE> Knight::getPossibleMoves()
+QVector<Coordinates> Knight::getPossibleMoves()
 {
 	MoveTypes possibleMoves;
 
@@ -22,9 +22,9 @@ std::vector<COORDINATE> Knight::getPossibleMoves()
     	short newY = currentPosition.file + y[direction];
 
     	if ( isFree(newX, newY) ) 
-            possibleMoves.commutingMoves.push_back( COORDINATE(newX, newY) );
+            possibleMoves.commutingMoves.push_back( Coordinates(newX, newY) );
         else if ( isEnemy(newX, newY) )
-            possibleMoves.capturingMoves.push_back( COORDINATE(newX, newY) );
+            possibleMoves.capturingMoves.push_back( Coordinates(newX, newY) );
     }
 
     return possibleMoves;
