@@ -2,6 +2,16 @@
 
 #include "Piece.h"
 
+
+Piece::Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
+    : symbol { symbol }
+    , currentPosition { currentPosition }
+    , board { board }
+    , QGraphicsSvgItem { parent }
+
+{
+}
+
 bool Piece::isEnemy( short row, short file)
 {
     // If it is out of boundaries

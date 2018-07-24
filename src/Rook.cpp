@@ -9,12 +9,7 @@ Rook::Rook( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphics
     setElementId( QString("%1Rook").arg(color) );
 }
 
-/*! 
-* @details Determine all the possible cells to which a given
-*        rook can move. It checks cells in four directions.
-* @return an std::vector with all the moves that the rook can
-*         do, moving up, down, left and right.
-*/
+
 QVector<Coordinates> Rook::getPossibleMoves()
 {
     // Store all the possible valid moves for the rook

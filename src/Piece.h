@@ -31,7 +31,7 @@ protected:
     /// The piece has to know its current position in the board
     Coordinates currentPosition;
 
-    /* Struct that  stores two arrays,  each with different types
+   /** Struct that  stores two arrays,  each with different types
     *  of moves. The first one, "commutingMoves",  are moves that
     *  the piece can make to an empty cell. The other, "capturing
     *  "moves", are moves when the piece moves and captures a pie
@@ -59,14 +59,7 @@ protected:
 
 public:
 
-    explicit Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr)
-        : symbol { symbol }
-        , currentPosition { currentPosition }
-        , board { board }
-        , QGraphicsSvgItem { parent }
-        
-    {
-    }
+    explicit Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
     
     ~Piece()
     {
@@ -78,11 +71,7 @@ public:
         if (deleteObject) this->deleteLater();
     }
 #endif
-    virtual QVector<Coordinates> getPossibleMoves()
-    {
-        QVector<Coordinates> possibleMoves;
-        return possibleMoves;
-    }
+    virtual QVector<Coordinates> getPossibleMoves() = 0;
 
     /*! 
     * @brief Checks if a given cell in the board is empty.
