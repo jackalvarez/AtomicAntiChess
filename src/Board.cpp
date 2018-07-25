@@ -159,6 +159,7 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
     selectedPiece = boardState[rowPos][colPos];
     if(selectedPiece)
     {
+        // Checks if the piece selected corresponds with the current turn
         if ( isRightTurn() )
         {
             validMoves = selectedPiece->getPossibleMoves();
@@ -175,6 +176,11 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
                 selectedRectangle->setBrush(QBrush(QColor(0, 180, 255, 100)));
                 this->scene->addItem(selectedRectangle);
             }
+        }
+        // If the turn wasn't correct, the piece could not be selected.
+        else
+        {
+            selectedPiece = nullptr;
         }
     }
 }

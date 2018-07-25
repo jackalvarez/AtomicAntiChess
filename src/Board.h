@@ -69,6 +69,9 @@ public:
     /// It assigns to selectedPiece the piece that is in the position given by rowPos and colPos.
     void savePieceIfPossible(int rowPos, int colPos);
 
+    /// Checks if the current player in turn corresponds with the color of the piece selected
+    bool isRightTurn();
+
     /// It checks if the piece can be moved to the position given by rowPos and colPos.
     /// If it can be moved, it will move the piece, and if the piece eats another one, it calls explode.
     void movePieceIfPossible(int rowPos, int colPos);
