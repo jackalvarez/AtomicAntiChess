@@ -5,6 +5,7 @@
 Bishop::Bishop( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
+    health = 2;
     QString color = (symbol.isLower()) ? "Black" : "White";
     setElementId( QString("%1Bishop").arg(color) );
 }

@@ -53,10 +53,7 @@ protected:
     //
     QPropertyAnimation* moveAnimation = nullptr;
 
-    #ifdef SECOND_COMMIT
-    short health;
-    short explosionDamage;
-    #endif
+    int health;
 
 public:
 
@@ -97,12 +94,13 @@ public:
 
     void move(QPointF newPosition);
 
-    #ifdef SECOND_COMMIT
-    short operator-=(short damageDealt);
-    inline short getHealth();
-    inline short getDamage();
-    #endif
+    /// Decreases the health of the piece by one
+    void decreaseHealth();
 
+    /// Method that returns the amount of reamining health of the piece
+    int getHealth();
+
+    /// Returns the symbol of the piece ( 'p', 'K', 'r', etc. )
     inline QChar getSymbol() const { return this->symbol; }
 
     inline int currentX() const { return currentPosition.file; }

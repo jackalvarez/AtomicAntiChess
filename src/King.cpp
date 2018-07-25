@@ -5,6 +5,7 @@
 King::King( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
+    health = 4;
     QString color = (symbol.isLower()) ? "Black" : "White";
     setElementId( QString("%1King").arg(color) );
 }

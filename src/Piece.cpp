@@ -36,6 +36,16 @@ bool Piece::isFree( short row, short file)
 	return (this->board[row][file] == nullptr);
 }
 
+void Piece::decreaseHealth()
+{
+    --this->health;
+}
+
+int Piece::getHealth()
+{
+    return this->health;
+}
+
 void Piece::move(QPointF newPosition)
 {
     this->moveAnimation = new QPropertyAnimation(this, "pos");

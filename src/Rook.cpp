@@ -5,6 +5,7 @@
 Rook::Rook( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
+    health = 3;
     QString color = (symbol.isLower()) ? "Black" : "White";
     setElementId( QString("%1Rook").arg(color) );
 }

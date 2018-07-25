@@ -120,15 +120,20 @@ void Board::explode(short captureRow, short captureFile)
         for ( ; file <= finalFile; ++file )
         {
             Piece* cell = boardState[row][file];
-            if ( cell)
+            if (cell)
             {
-                if ( cell->getSymbol().isLower())
-                    manager.decreaseBlackCount(1);
-                else
-                    manager.decreaseWhiteCount(1);
+                cell->decreaseHealth();
 
-                delete boardState[row][file];
-                boardState[row][file] = nullptr;
+                if ( cell->getHealth() == 0 )
+                {
+                    if ( cell->getSymbol().isLower())
+                        manager.decreaseBlackCount(1);
+                    else
+                        manager.decreaseWhiteCount(1);
+
+                    delete boardState[row][file];
+                    boardState[row][file] = nullptr;
+                }
             }
         }
     }
