@@ -190,6 +190,8 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
     }
 }
 
+
+
 void Board::movePieceIfPossible(int rowPos, int colPos)
 {
     bool validMove = false;
@@ -210,6 +212,7 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
             boardState[rowPos][colPos] = nullptr;
             movePiece(rowPos, colPos);
             validMove = true;
+            manager.resetMovesCounter();
             explode(rowPos, colPos);
         }
     }
