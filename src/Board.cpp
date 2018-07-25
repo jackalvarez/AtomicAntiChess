@@ -107,17 +107,19 @@ void Board::addPiecesToScene()
 
 void Board::explode(short captureRow, short captureFile)
 {
+    int row = (captureRow > 0) ? (captureRow - 1) : 0;
+    int finalRow = (captureRow + 1 < 8) ? captureRow + 1 : 7;
+
     // Loops within one piece radius from the capturing square horizontally 
-    for ( int row = captureRow - 1; row <= captureRow + 1; ++row )
+    for ( ; row <= finalRow; ++row )
     {
-        if ( row >= 0 && row < 8)
+        int file = (captureFile) ? captureFile - 1 : 0;
+        int finalFile = (capturefile + 1 < 8) ? captureFile + 1 : 7;
+
+        // Loops within one piece radius from the capturing square horizontally 
+        for ( ; file <= finalFile; ++file )
         {
-            // Loops within one piece radius from the capturing square horizontally 
-            for ( int file = captureFile - 1; row <= captureFile + 1; ++file )
-            {
-                if ( file >= 0 && file < 8)
-                    delete boardState[row][file];
-            }
+            delete boardState[row][file];
         }
     }
 }
