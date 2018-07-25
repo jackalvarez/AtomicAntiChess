@@ -41,6 +41,8 @@ private:
     Score* blackScore = nullptr;
     ///
     Piece* selectedPiece = nullptr;
+    ///
+    QGraphicsRectItem* selectedRectangle;
     /// Keeps the valid moves from the last selected piece.
     MoveTypes validMoves;
 

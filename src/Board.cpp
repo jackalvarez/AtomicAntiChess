@@ -99,6 +99,7 @@ void Board::addPiecesToScene()
         }
     }
 #endif
+// This was used for testing purposes.
 #if 0
     boardState[1][0]->setPos(100, 97);
     scene->addItem(boardState[1][0]);
@@ -114,12 +115,13 @@ void Board::explode(short captureRow, short captureFile)
     for ( ; row <= finalRow; ++row )
     {
         int file = (captureFile) ? captureFile - 1 : 0;
-        int finalFile = (capturefile + 1 < 8) ? captureFile + 1 : 7;
+        int finalFile = (captureFile + 1 < 8) ? captureFile + 1 : 7;
 
         // Loops within one piece radius from the capturing square horizontally 
         for ( ; file <= finalFile; ++file )
         {
             delete boardState[row][file];
+            boardState[row][file] = nullptr;
         }
     }
 }
@@ -148,6 +150,14 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
         // If there are no possible moves, then the piece shouldn't be selected.
         if(validMoves.commutingMoves.size() == 0 && validMoves.capturingMoves.size() == 0)
             selectedPiece = nullptr;
+        if(selectedPiece)
+        {
+            selectedRectangle = new QGraphicsRectItem(colPos * scene->width() / 8, rowPos * scene->height() / 8,
+                                                      scene->width() / 8, scene->height() / 8);
+            // Paints the rectangle light blue.
+            selectedRectangle->setBrush(QBrush(QColor(0, 180, 255, 100)));
+            this->scene->addItem(selectedRectangle);
+        }
     }
 }
 
@@ -173,6 +183,10 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
             validMove = true;
             explode(rowPos, colPos);
         }
+    }
+    if(validMove)
+    {
+        delete selectedRectangle;
     }
 }
 

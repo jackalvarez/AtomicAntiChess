@@ -35,10 +35,20 @@ int Game::run()
   #if ! defined(Q_OS_ANDROID) && ! defined(Q_OS_IOS)
     this->view->resize(720, 695);
   #endif
+    this->view->setFixedSize(720, 695);
 
 	// Set a black color background or add an image as a background
     this->view->setBackgroundBrush(QBrush(Qt::white, Qt::Dense5Pattern));
     this->board = new Board(QPixmap(":/board.png"));
+
+    /*
+     * Testing of QGraphicsRectItem
+    this->rect = new QGraphicsRectItem(720*7/8, 695*6/8, 720/8, 695*2/8);
+    QBrush brush(QColor(0, 180, 255));
+    this->rect->setBrush(brush);
+    scene->addItem(rect);
+    */
+
     board->setScene(this->scene);
     scene->addItem( board );
     board->addPiecesToScene();

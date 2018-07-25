@@ -5,6 +5,7 @@
 
 class QGraphicsScene;
 class QGraphicsView;
+class QGraphicsRectItem;
 class Player;
 class Score;
 class Board;
@@ -26,6 +27,8 @@ class Game : public QApplication
 
     /// Keeps pointers to the pieces
     Board* board;
+
+    QGraphicsRectItem* rect;
 
   public:
 	/// Constructor
