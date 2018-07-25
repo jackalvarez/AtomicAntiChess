@@ -66,6 +66,10 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
     SET_PIECES(7, 3, 'Q', Queen);
 	// White king
     SET_PIECES(7, 4, 'K', King);
+
+    for(int row = 2; row < 6; ++ row)
+        for(int col = 0; col < 8; ++col)
+            boardState[row][col] = nullptr;
 }
 
 Board::~Board()
@@ -112,7 +116,7 @@ void Board::explode(short captureRow, short captureFile)
             for ( int file = captureFile - 1; row <= captureFile + 1; ++file )
             {
                 if ( file >= 0 && file < 8)
-                    delete[] boardState[row][file];
+                    delete boardState[row][file];
             }
         }
     }
@@ -124,20 +128,7 @@ void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
     std::cerr << "Board(" << colPos << ", " << rowPos << ") ";
     // If there's a selected piece, then the player will try to make a move
     if(selectedPiece)
-    {
-        bool validMove = false;
-        for(int index = 0; index < validMoves.commutingMoves.size() && !validMove; ++index)
-        {
-            if(colPos == validMoves.commutingMoves[index].file && rowPos == validMoves.commutingMoves[index].row)
-            {
-                selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
-                boardState[rowPos][colPos] = selectedPiece;
-                selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
-                boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));
-                validMove = true;
-            }
-        }
-    }
+        movePieceIfPossible(rowPos, colPos);
     // If not, the player is trying to select a piece to move
     else
         savePieceIfPossible(rowPos, colPos);
@@ -151,10 +142,44 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
     {
         validMoves = selectedPiece->getPossibleMoves();
         std::cerr << validMoves.commutingMoves.size() << '-' << validMoves.capturingMoves.size() << std::endl;
+
         // If there are no possible moves, then the piece shouldn't be selected.
         if(validMoves.commutingMoves.size() == 0 && validMoves.capturingMoves.size() == 0)
             selectedPiece = nullptr;
     }
+}
+
+void Board::movePieceIfPossible(int rowPos, int colPos)
+{
+    bool validMove = false;
+    for(int index = 0; index < validMoves.commutingMoves.size() && !validMove; ++index)
+    {
+        if(colPos == validMoves.commutingMoves[index].file && rowPos == validMoves.commutingMoves[index].row)
+        {
+            movePiece(rowPos, colPos);
+            validMove = true;
+        }
+    }
+
+    for(int index = 0; index < validMoves.capturingMoves.size() && !validMove; ++index)
+    {
+        if(colPos == validMoves.capturingMoves[index].file && rowPos == validMoves.capturingMoves[index].row)
+        {
+            delete boardState[rowPos][colPos];
+            boardState[rowPos][colPos] = nullptr;
+            movePiece(rowPos, colPos);
+            validMove = true;
+            explode(rowPos, colPos);
+        }
+    }
+}
+
+void Board::movePiece(int rowPos, int colPos)
+{
+    selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
+    boardState[rowPos][colPos] = selectedPiece;
+    selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
+    boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));
 }
 
 int Board::filePosition(qreal x) const

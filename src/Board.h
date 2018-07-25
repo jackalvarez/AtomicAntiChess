@@ -64,9 +64,17 @@ public:
     */
 	void explode(short captureRow, short captureFile);
 	
+    ///
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
+    ///
     void savePieceIfPossible(int rowPos, int colPos);
+
+    ///
+    void movePieceIfPossible(int rowPos, int colPos);
+
+    ///
+    void movePiece(int rowPos, int colPos);
 
     void setScene(QGraphicsScene* scene);
 
