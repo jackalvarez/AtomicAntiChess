@@ -7,7 +7,7 @@
 #include <QVector>
 
 #include "Piece.h"
-#include "Score.h"
+#include "ChessManager.h"
 
 
 #define SECOND_COMMIT 0
@@ -35,25 +35,22 @@ private:
     QGraphicsScene* scene;
     /// Parsers the assets svg file
     QSvgRenderer* svgRenderer = nullptr;
-    ///
-    Score* whiteScore = nullptr;
-    ///
-    Score* blackScore = nullptr;
-    ///
+    /// Keeps the pointer to the selected piece by the player.
     Piece* selectedPiece = nullptr;
-    ///
+    /// Used to show in some way that a piece was selected.
     QGraphicsRectItem* selectedRectangle;
     /// Keeps the valid moves from the last selected piece.
     MoveTypes validMoves;
+    ///
+    ChessManager manager;
 
 public:
-	// Constructor. Creates the board for a game in the starting position.
+    /// Constructor. Creates the board for a game in the starting position.
     explicit Board(const QPixmap& pixmap, QGraphicsItem* parent = nullptr);
 
+    /// Destructor. Eliminates all pointers created (like the pieces).
     ~Board();
 
-	// Makes sure that a given move is done an the board state is changed
-	void makeMove();
 
 	/*! 
     * @brief Explodes all the pieces surrounding a given cell.
@@ -66,10 +63,11 @@ public:
     */
 	void explode(short captureRow, short captureFile);
 	
-    ///
+    /// If a piece hasn't been selected, it calls a method that saves the selected piece.
+    /// If the piece has been selected, it calls a method that will let the player move the piece to valid positions.
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
-    ///
+    /// It
     void savePieceIfPossible(int rowPos, int colPos);
 
     ///
