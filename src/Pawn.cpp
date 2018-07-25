@@ -1,6 +1,7 @@
 #include <cctype>
 
 #include "Pawn.h"
+//#include "Piece.h"
 
 Pawn::Pawn( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)

@@ -15,7 +15,7 @@ class Rook : public Piece
     * @return an std::vector with all the moves that the rook can
     *         do, moving up, down, left and right.
     */
-    QVector<Coordinates> getPossibleMoves();
+    MoveTypes getPossibleMoves();
 };
 
 #endif // ROOK_H

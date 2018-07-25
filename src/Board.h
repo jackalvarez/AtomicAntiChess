@@ -36,11 +36,13 @@ private:
     /// Parsers the assets svg file
     QSvgRenderer* svgRenderer = nullptr;
     ///
-    Piece* selectedPiece = nullptr;
-    ///
     Score* whiteScore = nullptr;
     ///
     Score* blackScore = nullptr;
+    ///
+    Piece* selectedPiece = nullptr;
+    /// Keeps the valid moves from the last selected piece.
+    MoveTypes validMoves;
 
 public:
 	// Constructor. Creates the board for a game in the starting position.
@@ -63,6 +65,8 @@ public:
 	void explode(short captureRow, short captureFile);
 	
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+
+    void savePieceIfPossible(int rowPos, int colPos);
 
     void setScene(QGraphicsScene* scene);
 

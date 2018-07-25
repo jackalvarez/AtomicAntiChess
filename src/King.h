@@ -9,7 +9,7 @@ class King : public Piece
   public:
     King( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    QVector<Coordinates> getPossibleMoves();
+    MoveTypes getPossibleMoves();
 };
 
 #endif // KING_H

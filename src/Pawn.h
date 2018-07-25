@@ -20,7 +20,7 @@ class Pawn : public Piece
     *          given pawn, and if so, adds them to the corresponding vectors.
     * @return a MoveTypes struct with all the valid moves that the pawn can do.
     */
-    QVector<Coordinates> getPossibleMoves();
+    MoveTypes getPossibleMoves();
 
     /// Checks if the pawn is still in its starting position (meaning this is its first move).
     bool isFirstMove();

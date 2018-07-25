@@ -16,7 +16,7 @@ class Queen : public Piece
     *		 and diagonally), so it checks for rook and bishop's moves.
     * @return a MoveTypes struct with all the moves that the queen can do.
     */
-    QVector<Coordinates> getPossibleMoves();
+    MoveTypes getPossibleMoves();
 };
 
 #endif // QUEEN_H

@@ -4,10 +4,10 @@
 
 
 Piece::Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
-    : symbol { symbol }
+    : QGraphicsSvgItem { parent }
     , currentPosition { currentPosition }
+    , symbol { symbol }
     , board { board }
-    , QGraphicsSvgItem { parent }
 
 {
 }

@@ -9,7 +9,7 @@ class Knight : public Piece
   public:
     Knight( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
 
-    QVector<Coordinates> getPossibleMoves();
+    MoveTypes getPossibleMoves();
 };
 
 #endif // KNIGHT_H

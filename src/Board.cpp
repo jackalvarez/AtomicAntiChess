@@ -12,7 +12,7 @@
 
 #define SET_PIECES(row, file, representationCharacter, pieceType) \
     boardState[ (row) ][ (file) ] = new pieceType ( (representationCharacter), \
-    COORDINATE( (row), (file) ), boardState); \
+    Coordinates( (row), (file) ), boardState); \
     boardState[ (row) ][ (file) ]->setSharedRenderer(svgRenderer)
 
 Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
@@ -101,7 +101,7 @@ void Board::addPiecesToScene()
 #endif
 }
 
-void explode(short captureRow, short captureFile)
+void Board::explode(short captureRow, short captureFile)
 {
     // Loops within one piece radius from the capturing square horizontally 
     for ( int row = captureRow - 1; row <= captureRow + 1; ++row )
@@ -126,11 +126,9 @@ void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if(selectedPiece)
     {
         bool validMove = false;
-        QVector<Coordinates> validMoves = selectedPiece->getPossibleMoves();
-        std::cerr << validMoves.size();
-        for(int index = 0; index < validMoves.size() && !validMove; ++index)
+        for(int index = 0; index < validMoves.commutingMoves.size() && !validMove; ++index)
         {
-            if(colPos == validMoves[index].file && rowPos == validMoves[index].row)
+            if(colPos == validMoves.commutingMoves[index].file && rowPos == validMoves.commutingMoves[index].row)
             {
                 selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
                 boardState[rowPos][colPos] = selectedPiece;
@@ -142,13 +140,21 @@ void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
     // If not, the player is trying to select a piece to move
     else
+        savePieceIfPossible(rowPos, colPos);
+}
+
+void Board::savePieceIfPossible(int rowPos, int colPos)
+{
+    // If the cell has a Piece, it keeps the pointer, else, it will have a nullptr.
+    selectedPiece = boardState[rowPos][colPos];
+    if(selectedPiece)
     {
-        // If the cell has a Piece, it keeps the pointer, else, it will have a nullptr.
-        selectedPiece = boardState[rowPos][colPos];
-        if(selectedPiece)
-            std::cerr << "selected a piece";
+        validMoves = selectedPiece->getPossibleMoves();
+        std::cerr << validMoves.commutingMoves.size() << '-' << validMoves.capturingMoves.size() << std::endl;
+        // If there are no possible moves, then the piece shouldn't be selected.
+        if(validMoves.commutingMoves.size() == 0 && validMoves.capturingMoves.size() == 0)
+            selectedPiece = nullptr;
     }
-    std::cerr << std::endl;
 }
 
 int Board::filePosition(qreal x) const

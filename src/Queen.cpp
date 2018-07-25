@@ -5,7 +5,7 @@
 Queen::Queen( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
     : Piece (symbol, currentPosition, board, parent)
 {
-    QString color = (isLower(symbol)) ? "Black" : "White";
+    QString color = (symbol.isLower()) ? "Black" : "White";
     setElementId( QString("%1Queen").arg(color) );
 }
 
@@ -30,7 +30,7 @@ MoveTypes Queen::getPossibleMoves()
         while( x>=0 && x<8 && y>=0 && y<8 && isFree(x, y))
         {
         	// The move is valid, add it to possibleMoves
-            possibleMoves.push_back( Coordinates(x, y) );
+            possibleMoves.commutingMoves.push_back( Coordinates(x, y) );
 
             // Move the queen once more in the same direction
             x += xArray[direction]; y += yArray[direction];
@@ -38,7 +38,7 @@ MoveTypes Queen::getPossibleMoves()
 
         // If the last cell wasn't free, but instead had an enemy
         if( isEnemy(x,y) )
-            possibleMoves.push_back( Coordinates(x, y) );
+            possibleMoves.capturingMoves.push_back( Coordinates(x, y) );
     }
 
     // Return all the possible valid moves the queen could make

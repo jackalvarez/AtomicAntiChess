@@ -19,6 +19,19 @@ struct Coordinates
     {}
 };
 
+/** Struct that  stores two arrays,  each with different types
+ *  of moves. The first one, "commutingMoves",  are moves that
+ *  the piece can make to an empty cell. The other, "capturing
+ *  "moves", are moves when the piece moves and captures a pie
+ *  ce in another cell.
+ */
+ struct MoveTypes
+ {
+     QVector<Coordinates> commutingMoves;
+     QVector<Coordinates> capturingMoves;
+ };
+
+
 // The piece has public inheritance from QGraphicsSvgItem
 class Piece : public QGraphicsSvgItem
 {
@@ -30,18 +43,6 @@ protected:
 
     /// The piece has to know its current position in the board
     Coordinates currentPosition;
-
-   /** Struct that  stores two arrays,  each with different types
-    *  of moves. The first one, "commutingMoves",  are moves that
-    *  the piece can make to an empty cell. The other, "capturing
-    *  "moves", are moves when the piece moves and captures a pie
-    *  ce in another cell.
-    */ 
-    struct MoveTypes
-    {
-        QVector<Coordinates> commutingMoves;
-        QVector<Coordinates> capturingMoves;
-    };
 
     /// The symbol of the piece ( 'K','Q','R','B','N','P', etc).
     QChar symbol;
@@ -71,7 +72,7 @@ public:
         if (deleteObject) this->deleteLater();
     }
 #endif
-    virtual QVector<Coordinates> getPossibleMoves() = 0;
+    virtual MoveTypes getPossibleMoves() = 0;
 
     /*! 
     * @brief Checks if a given cell in the board is empty.
