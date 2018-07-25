@@ -14,10 +14,9 @@
 
 class Board : public QGraphicsPixmapItem
 {
-    //Q_OBJECT
     Q_DISABLE_COPY(Board)
 private: 
-	/* The matrix to store the state of the board as characters.
+    /*! The matrix to store the state of the board as characters.
 	 * Notation: 
 	 *	K = King
 	 * 	Q = Queen
@@ -41,7 +40,7 @@ private:
     QGraphicsRectItem* selectedRectangle;
     /// Keeps the valid moves from the last selected piece.
     MoveTypes validMoves;
-    ///
+    /// It keeps track of the remaining pieces of each player, the current turn and if the game ended.
     ChessManager manager;
 
 public:
@@ -67,22 +66,33 @@ public:
     /// If the piece has been selected, it calls a method that will let the player move the piece to valid positions.
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
-    /// It
+    /// It assigns to selectedPiece the piece that is in the position given by rowPos and colPos.
     void savePieceIfPossible(int rowPos, int colPos);
 
-    ///
+    /// It checks if the piece can be moved to the position given by rowPos and colPos.
+    /// If it can be moved, it will move the piece, and if the piece eats another one, it calls explode.
     void movePieceIfPossible(int rowPos, int colPos);
 
-    ///
+    /// It tells the piece to move the position given by rowPos, and colPos.
+    /// It also does changes to boardState to update the pieces positions.
     void movePiece(int rowPos, int colPos);
 
+    /// Sets the scene, so Board is able to make changes to it.
     void setScene(QGraphicsScene* scene);
 
+    /// Adds the pieces to the scene.
     void addPiecesToScene();
 
+    /// It gets the file position on the board where the player clicked on.
     int filePosition(qreal x) const;
+
+    /// It gets the row position on the board where the player clicked on.
     int rowPosition(qreal y) const;
+
+    /// Method used by filePosition and rowPosition to get the position of the board the player clicked on.
     int cell(qreal position, qreal dimension) const;
+
+    /// It changes the position on the board to a position in the scene (a QPointF).
     QPointF fromCellPosToQPointF(int row, int col) const;
 private:
 
