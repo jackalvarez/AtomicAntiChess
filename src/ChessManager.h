@@ -26,6 +26,10 @@ class ChessManager
     /// The game ended if one of the players doesn't have any pieces anymore or
     /// if it has passed five turns since the last time a piece was eaten.
     bool matchEnded() const;
+    /// Changes the current turn, if it is white, make it black and viceversa
+    void changeTurn();
+    /// Returns the current turn of the game
+    int getTurn();
     /// Decreases the count of white pieces if at least one was eaten.
     void decreaseWhiteCount(int decreaseValue);
     /// Decreases the count of black pieces if at least one was eaten.

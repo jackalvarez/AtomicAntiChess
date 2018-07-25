@@ -119,8 +119,17 @@ void Board::explode(short captureRow, short captureFile)
         // Loops within one piece radius from the capturing square horizontally 
         for ( ; file <= finalFile; ++file )
         {
-            delete boardState[row][file];
-            boardState[row][file] = nullptr;
+            Piece* cell = boardState[row][file];
+            if ( cell)
+            {
+                if ( cell->getSymbol().isLower())
+                    manager.decreaseBlackCount(1);
+                else
+                    manager.decreaseWhiteCount(1);
+
+                delete boardState[row][file];
+                boardState[row][file] = nullptr;
+            }
         }
     }
 }
@@ -137,25 +146,35 @@ void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
         savePieceIfPossible(rowPos, colPos);
 }
 
+bool Board::isRightTurn()
+{
+    if ( selectedPiece->getSymbol().isLower())
+        return ( manager.getTurn() == 1 );
+
+    return ( manager.getTurn() == 0 );
+}
 void Board::savePieceIfPossible(int rowPos, int colPos)
 {
     // If the cell has a Piece, it keeps the pointer, else, it will have a nullptr.
     selectedPiece = boardState[rowPos][colPos];
     if(selectedPiece)
     {
-        validMoves = selectedPiece->getPossibleMoves();
-        std::cerr << validMoves.commutingMoves.size() << '-' << validMoves.capturingMoves.size() << std::endl;
-
-        // If there are no possible moves, then the piece shouldn't be selected.
-        if(validMoves.commutingMoves.size() == 0 && validMoves.capturingMoves.size() == 0)
-            selectedPiece = nullptr;
-        if(selectedPiece)
+        if ( isRightTurn() )
         {
-            selectedRectangle = new QGraphicsRectItem(colPos * scene->width() / 8, rowPos * scene->height() / 8,
-                                                      scene->width() / 8, scene->height() / 8);
-            // Paints the rectangle light blue.
-            selectedRectangle->setBrush(QBrush(QColor(0, 180, 255, 100)));
-            this->scene->addItem(selectedRectangle);
+            validMoves = selectedPiece->getPossibleMoves();
+            std::cerr << validMoves.commutingMoves.size() << '-' << validMoves.capturingMoves.size() << std::endl;
+
+            // If there are no possible moves, then the piece shouldn't be selected.
+            if(validMoves.commutingMoves.size() == 0 && validMoves.capturingMoves.size() == 0)
+                selectedPiece = nullptr;
+            if(selectedPiece)
+            {
+                selectedRectangle = new QGraphicsRectItem(colPos * scene->width() / 8, rowPos * scene->height() / 8,
+                                                          scene->width() / 8, scene->height() / 8);
+                // Paints the rectangle light blue.
+                selectedRectangle->setBrush(QBrush(QColor(0, 180, 255, 100)));
+                this->scene->addItem(selectedRectangle);
+            }
         }
     }
 }
@@ -185,6 +204,7 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
     }
     if(validMove)
     {
+        manager.changeTurn();
         delete selectedRectangle;
         selectedRectangle = nullptr;
     }
