@@ -39,10 +39,13 @@ class Game : public QApplication
 	/// Play the given filename as background music
 	void playBackgroundMusic(const QString& audioFilename);
 
+    /// Ends the execution of the program.
     void endGame();
 
+    /// Deletes the board and sets it up again.
     void resetGame();
 
+    /// Sets up the board.
     void initializeBoard();
 
   protected slots:
