@@ -20,8 +20,8 @@ MoveTypes Pawn::getPossibleMoves()
     // If the pawn is black, it moves up, if it is white, it moves down.
     int direction = (this->symbol == 'P') ? -1 : 1;
 
-    // If this is the pawns first move, it can move twice front
-    if ( isFirstMove())
+    // If this is the pawns first move, it can move twice front (if the cell is free)
+    if ( isFirstMove() && isFree(currentPosition.row+(2*direction), currentPosition.file))
         possibleMoves.commutingMoves.push_back( Coordinates(currentPosition.row+(2*direction), currentPosition.file) );\
 
     // If the cell in front of the pawn is empty, it can move there
