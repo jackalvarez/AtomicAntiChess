@@ -3,7 +3,7 @@
 #ifndef KING_H
 #define KING_H
 
-
+/// Creates a new Piece of type king which moves in any direction one move
 class King : public Piece
 {
   public:

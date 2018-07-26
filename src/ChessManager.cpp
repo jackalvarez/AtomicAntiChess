@@ -12,7 +12,11 @@ ChessManager::ChessManager()
 
 void ChessManager::setGameState()
 {
-    if ( whitePiecesRemaining == 0 || blackTurnsWithoutCapturing >= MAX_TURNS_WITHOUT_CAPTURING)
+    if ( whitePiecesRemaining == 0 && blackPiecesRemaining == 0 )
+    {
+        gameState = 'T';
+    }
+    else if ( whitePiecesRemaining == 0 || blackTurnsWithoutCapturing >= MAX_TURNS_WITHOUT_CAPTURING)
     {
         gameState = 'W';
     }

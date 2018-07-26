@@ -31,7 +31,7 @@ class ChessManager
     /// The game ended if one of the players doesn't have any pieces left or
     /// if five turns have passed since the last time a piece was captured.
     void setGameState();
-    /// Return the current state of the game ('B', 'W' or '-')
+    /// Return the current state of the game ('B', 'W', 'T' or '-')
     QChar getGameState() const;
     /// Called if a capture was made. Resets the counter of moves of that player
     void resetMovesCounter();

@@ -10,7 +10,7 @@ GameEnded::GameEnded(const QString& winner, QWidget *parent)
     , resetGame { false }
 {
     ui->setupUi(this);
-    ui->winnerText->setText(winner + " player won!");
+    ui->winnerText->setText(winner);
 }
 
 GameEnded::~GameEnded()

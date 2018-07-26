@@ -217,6 +217,7 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
 
 void Board::movePieceIfPossible(int rowPos, int colPos)
 {
+    // Allows the piece to be reselected (if the player touches another piece of the same color)
     if(boardState[rowPos][colPos] && ((selectedPiece->getSymbol().isLower() && boardState[rowPos][colPos]->getSymbol().isLower())
                                       || selectedPiece->getSymbol().isUpper() && boardState[rowPos][colPos]->getSymbol().isUpper()))
     {
@@ -226,6 +227,8 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
     else
     {
         bool validMove = false;
+
+        // Checks if the move made by the player was any of the commuting moves
         for(int index = 0; index < validMoves.commutingMoves.size() && !validMove; ++index)
         {
             if(colPos == validMoves.commutingMoves[index].file && rowPos == validMoves.commutingMoves[index].row)
@@ -235,52 +238,74 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
             }
         }
 
+        // Checks if the move made was a capture to another piece
         for(int index = 0; index < validMoves.capturingMoves.size() && !validMove; ++index)
         {
             if(colPos == validMoves.capturingMoves[index].file && rowPos == validMoves.capturingMoves[index].row)
             {
+                // If a capture was made, the piece captured is deleted
                 if ( boardState[rowPos][colPos]->getSymbol().isLower())
                     manager.decreaseBlackCount(1);
                 else
                     manager.decreaseWhiteCount(1);
                 delete boardState[rowPos][colPos];
                 boardState[rowPos][colPos] = nullptr;
+
+                // Makes the move from the last piece to the chosen cell
                 movePiece(rowPos, colPos);
                 validMove = true;
+
+                // A capture was made, the timers are resetted
                 manager.resetMovesCounter();
                 explode(rowPos, colPos);
             }
         }
+
+        // If the moved chosen was a valid one
         if(validMove)
         {
+            // Change turns
             manager.changeTurn();
             changeTurnRepresentation();
+
+            // Now no pieces are selected
             delete selectedRectangle;
             selectedRectangle = nullptr;
         }
     }
+
+    // Checks if the game ended
     manager.setGameState();
     checkIfGameEnded();
 }
 
 void Board::checkIfGameEnded()
 {
+    // Gets the current state of the game ('W', 'B' or '-')
     QChar gameState = manager.getGameState();
-    if(gameState == 'W' || gameState == 'B')
+
+    // If the game was won by any of the players
+    if(gameState == 'W' || gameState == 'B' || gameState == 'T')
     {
         QString winner;
         if(gameState == 'W')
-            winner = "White";
+            winner = "White player won!";
         else if(gameState == 'B')
-            winner = "Black";
+            winner = "Black player won!";
+        else
+            winner = "The game was tied!";
+
         GameEnded* gameEnded = new GameEnded(winner);
         gameEnded->exec();
 
+        // Closes the game
         if(gameEnded->getEndGame())
         {
             std::cerr << "Game ended\n";
             game->endGame();
         }
+
+        // Resets the game
         else if(gameEnded->getResetGame())
         {
             std::cerr << "Reset game\n";
