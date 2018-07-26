@@ -11,8 +11,6 @@ GameEnded::GameEnded(const QString& winner, QWidget *parent)
 {
     ui->setupUi(this);
     ui->winnerText->setText(winner + " player won!");
-    connect(ui->exitButton, &QPushButton::clicked, this, &GameEnded::endCurrentGame);
-    connect(ui->resetButton, &QPushButton::clicked, this, &GameEnded::resetCurrentGame);
 }
 
 GameEnded::~GameEnded()
@@ -20,16 +18,6 @@ GameEnded::~GameEnded()
     delete ui;
 }
 
-void GameEnded::endCurrentGame()
-{
-    std::cerr << "Exit\n";
-    this->endGame = true;
-}
-void GameEnded::resetCurrentGame()
-{
-    std::cerr << "Reset\n";
-    this->resetGame = true;
-}
 
 void GameEnded::on_exitButton_clicked()
 {

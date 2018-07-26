@@ -271,13 +271,11 @@ void Board::checkIfGameEnded()
         {
             std::cerr << "Game ended\n";
             game->endGame();
-            //gameEnded->close();
         }
         else if(gameEnded->getResetGame())
         {
             std::cerr << "Reset game\n";
             game->resetGame();
-            //gameEnded->close();
         }
 
     }

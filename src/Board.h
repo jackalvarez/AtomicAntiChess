@@ -44,11 +44,11 @@ private:
     MoveTypes validMoves;
     /// It keeps track of the remaining pieces of each player, the current turn and if the game ended.
     ChessManager manager;
-
+    /// Used to show an explosion on the position where a piece was eaten.
     Explosion* explosion;
-
+    /// A circle that is either black or white. It represents the current turn of one of the players.
     QGraphicsEllipseItem* turnRepresentation;
-
+    /// Used to call the endGame or resetGame methods.
     Game* game = nullptr;
 
 public:
@@ -88,10 +88,14 @@ public:
     /// It also does changes to boardState to update the pieces positions.
     void movePiece(int rowPos, int colPos);
 
+    /// If it is now the black player's turn, it changes the color of turnRepresentation to black.
+    /// Else, it chenges the colot to white.
     void changeTurnRepresentation();
 
+    /// Shows an explosion on a position where a piece was destroyed.
     void setExplosion(int row, int file);
 
+    /// Checks if the game ended. If it ended, then it shows a window where the players can choose to reset the game or just finish it.
     void checkIfGameEnded();
 
     /// Sets the scene, so Board is able to make changes to it.
