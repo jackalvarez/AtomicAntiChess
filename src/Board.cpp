@@ -298,11 +298,11 @@ void Board::movePiece(int rowPos, int colPos)
     // If the piece is a pawn, and it is in the last rank, a promotion move ocurred
     if ( ( selectedPiece->getSymbol() == 'P' || selectedPiece->getSymbol() == 'p') && ( rowPos == 7 || rowPos == 0 ) )
     {
-        boardState[selectedPiece->getPosition().row][selectedPiece->getPosition().file]->deleteLater();
+        delete boardState[selectedPiece->getPosition().row][selectedPiece->getPosition().file];
         QChar newSymbol = (rowPos) ? 'q' : 'Q';
-        selectedPiece = new Queen(newSymbol, selectedPiece->getPosition(), boardState);
+        boardState[rowPos][colPos] = selectedPiece = new Queen(newSymbol, selectedPiece->getPosition(), boardState);
+        boardState[rowPos][colPos]->setSharedRenderer(svgRenderer);
         scene->addItem(selectedPiece);
-        //boardState[rowPos][colPos]->setSharedRenderer(svgRenderer);
     }
 
     selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
