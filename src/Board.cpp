@@ -107,6 +107,10 @@ void Board::addPiecesToScene()
 
 void Board::explode(short captureRow, short captureFile)
 {
+    explosion = new Explosion();
+    explosion->setPos(fromCellPosToQPointF(captureRow, captureFile));
+    scene->addItem(explosion);
+    explosion->explode();
     int row = (captureRow > 0) ? (captureRow - 1) : 0;
     int finalRow = (captureRow + 1 < 8) ? captureRow + 1 : 7;
 
@@ -175,8 +179,8 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
                 selectedPiece = nullptr;
             if(selectedPiece)
             {
-                selectedRectangle = new QGraphicsRectItem(colPos * scene->width() / 8, rowPos * scene->height() / 8,
-                                                          scene->width() / 8, scene->height() / 8);
+                selectedRectangle = new QGraphicsRectItem(colPos * 720 / 8, rowPos * 695 / 8,
+                                                          720 / 8, 695 / 8);
                 // Paints the rectangle light blue.
                 selectedRectangle->setBrush(QBrush(QColor(0, 180, 255, 100)));
                 this->scene->addItem(selectedRectangle);
@@ -234,11 +238,11 @@ void Board::movePiece(int rowPos, int colPos)
 
 int Board::filePosition(qreal x) const
 {
-    return cell(x, this->scene->width());
+    return cell(x, 720);
 }
 int Board::rowPosition(qreal y) const
 {
-    return cell(y, this->scene->height());
+    return cell(y, 695);
 }
 
 int Board::cell(qreal position, qreal dimension) const
@@ -248,6 +252,6 @@ int Board::cell(qreal position, qreal dimension) const
 
 QPointF Board::fromCellPosToQPointF(int row, int col) const
 {
-    qreal rowDimension = scene->height() / 8, colDimension = scene->width() / 8;
+    qreal rowDimension = 695 / 8.0, colDimension = 720 / 8.0;
     return QPointF( 0 + (col * colDimension), 0 + (row * rowDimension) );
 }

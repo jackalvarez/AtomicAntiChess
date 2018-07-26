@@ -6,8 +6,9 @@
 #include <QSvgRenderer>
 #include <QVector>
 
-#include "Piece.h"
 #include "ChessManager.h"
+#include "Explosion.h"
+#include "Piece.h"
 
 
 #define SECOND_COMMIT 0
@@ -42,6 +43,8 @@ private:
     MoveTypes validMoves;
     /// It keeps track of the remaining pieces of each player, the current turn and if the game ended.
     ChessManager manager;
+
+    Explosion* explosion;
 
 public:
     /// Constructor. Creates the board for a game in the starting position.

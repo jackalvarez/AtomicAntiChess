@@ -24,9 +24,6 @@ Game::~Game()
 // ToDo: Adapt for our game.
 int Game::run()
 {
-	// Init the random seed
-	qsrand(QTime::currentTime().msec());
-
 	// An invisible object that manages all the items
 	this->scene = new QGraphicsScene();
 
@@ -35,19 +32,11 @@ int Game::run()
   #if ! defined(Q_OS_ANDROID) && ! defined(Q_OS_IOS)
     this->view->resize(720, 695);
   #endif
-    this->view->setFixedSize(720, 695);
+    this->view->setFixedSize(850, 695);
 
 	// Set a black color background or add an image as a background
     this->view->setBackgroundBrush(QBrush(Qt::white, Qt::Dense5Pattern));
     this->board = new Board(QPixmap(":/board.png"));
-
-    /*
-     * Testing of QGraphicsRectItem
-    this->rect = new QGraphicsRectItem(720*7/8, 695*6/8, 720/8, 695*2/8);
-    QBrush brush(QColor(0, 180, 255));
-    this->rect->setBrush(brush);
-    scene->addItem(rect);
-    */
 
     board->setScene(this->scene);
     scene->addItem( board );
@@ -60,23 +49,7 @@ int Game::run()
 
 	// Disable scrollbars because they are not longer needed
 	this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-#if 0
-	// A label to show the player score
-	this->score = new Score(tr("Score"), 0, Qt::blue);
-	this->score->setPos(5, 0);
-	this->scene->addItem(this->score);
-#endif
-
-    /*
-	// Launch an enemy periodically
-	QTimer* timer = new QTimer(this);
-	connect(timer, &QTimer::timeout, this, &Game::launchObstacle);
-	timer->start(1500);
-    */
-
-	// Play background music
-	playBackgroundMusic("FunkGameLoop32m.mp3");
+    this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	// Show the view and enter in application's event loop
 	this->view->show();
@@ -102,11 +75,3 @@ void Game::playBackgroundMusic(const QString& audioFilename)
 	mediaPlayer->play();
 }
 
-// To use as an example.
-/*void Game::launchObstacle()
-{
-	Obstacle* obstacle = new Obstacle();
-	obstacle->setSharedRenderer(svgRenderer);
-	scene->addItem(obstacle);
-	obstacle->setInitialPos();
-}*/
