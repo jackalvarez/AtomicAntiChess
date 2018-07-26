@@ -17,7 +17,16 @@ Because the winner is the one that runs out of pieces, a player is not advised t
 - Queen 4
 - King 5
 
-So, if a pawn is within the radius of a explosion, it will always be removed from the board, but other pieces may not, depending on how much lives left they have.
+So, if a pawn is within the radius of a explosion, it will always be removed from the board, but other pieces may not, depending on how much lives they have left.
+
+`Image before a explosion. The white pawn on f4 will take the black pawn on e5`
+![](/preexplosion_screenshot.png)
+
+`Image during the explosion. The 8 squares around the capturing square explode.`
+![](/explosion_screenshot.png)
+
+`Image after the explosion. The exploded pieces have been removed from the board`
+![](/postexplosion_screenshot.png)
 
 **5 moves rule:** As it is not within the player's benefit to take all of the opponent's pieces, the situation may occur in which both players move pieces back and forth without ever capturing, taking the fun out of the game. To avoid this problem, each player is required to make at least one capture every 5 moves. If the player does not capture within 5 moves, he automatically loses.
 
