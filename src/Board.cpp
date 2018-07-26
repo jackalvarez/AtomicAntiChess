@@ -283,7 +283,16 @@ void Board::checkIfGameEnded()
 
 void Board::movePiece(int rowPos, int colPos)
 {
+    // If the piece is a pawn, and it is in the last rank, a promotion move ocurred
+    if ( ( selectedPiece->getSymbol() == 'P' || selectedPiece->getSymbol() == 'p') && ( rowPos == 7 || rowPos == 0 ) )
+    {
+        selectedPiece = new Queen('Q', selectedPiece->getPosition(), boardState);
+        delete selectedPiece;
+        //boardState[rowPos][colPos]->setSharedRenderer(svgRenderer);
+    }
+
     selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
+
     boardState[rowPos][colPos] = selectedPiece;
     selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
     boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));

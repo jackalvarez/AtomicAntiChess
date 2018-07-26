@@ -103,6 +103,9 @@ public:
     /// Returns the symbol of the piece ( 'p', 'K', 'r', etc. )
     inline QChar getSymbol() const { return this->symbol; }
 
+    /// Returns the Coordinates struct of the piece
+    inline Coordinates getPosition() const { return this->currentPosition; }
+
     inline int currentX() const { return currentPosition.file; }
     inline int currentY() const { return currentPosition.row; }
 
