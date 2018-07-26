@@ -39,6 +39,12 @@ class Game : public QApplication
 	/// Play the given filename as background music
 	void playBackgroundMusic(const QString& audioFilename);
 
+    void endGame();
+
+    void resetGame();
+
+    void initializeBoard();
+
   protected slots:
 };
 

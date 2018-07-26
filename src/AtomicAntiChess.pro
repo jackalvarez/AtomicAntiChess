@@ -40,7 +40,8 @@ HEADERS += \
     King.h \
     Bishop.h \
     ChessManager.h \
-    Explosion.h
+    Explosion.h \
+    GameEnded.h
 
 SOURCES += \
     main.cpp \
@@ -55,7 +56,11 @@ SOURCES += \
     King.cpp \
     Bishop.cpp \
     ChessManager.cpp \
-    Explosion.cpp
+    Explosion.cpp \
+    GameEnded.cpp
 
 RESOURCES += \
     ../Assets/assets.qrc
+
+FORMS += \
+    GameEnded.ui

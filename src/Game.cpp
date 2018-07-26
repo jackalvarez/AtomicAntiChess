@@ -36,11 +36,7 @@ int Game::run()
 
 	// Set a black color background or add an image as a background
     this->view->setBackgroundBrush(QBrush(Qt::white, Qt::Dense5Pattern));
-    this->board = new Board(QPixmap(":/board.png"));
-
-    board->setScene(this->scene);
-    scene->addItem( board );
-    board->addPiecesToScene();
+    initializeBoard();
 
     // The scene has infinite size, but we want it to have the same size than the view
 	// This stops the weird behavior of the autoscroll feature of the view being smaller than the
@@ -73,5 +69,25 @@ void Game::playBackgroundMusic(const QString& audioFilename)
 	// Set 2/3 of the volume and start playing the background music
 	mediaPlayer->setVolume(67);
 	mediaPlayer->play();
+}
+
+void Game::endGame()
+{
+    this->exit();
+}
+
+void Game::resetGame()
+{
+    this->scene->removeItem(board);
+    delete board;
+    initializeBoard();
+}
+
+void Game::initializeBoard()
+{
+    board = new Board(QPixmap(":/board.png"), this);
+    board->setScene(this->scene);
+    scene->addItem( board );
+    board->addPiecesToScene();
 }
 

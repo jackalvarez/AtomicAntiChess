@@ -8,6 +8,7 @@
 
 #include "ChessManager.h"
 #include "Explosion.h"
+#include "Game.h"
 #include "Piece.h"
 
 
@@ -48,9 +49,11 @@ private:
 
     QGraphicsEllipseItem* turnRepresentation;
 
+    Game* game = nullptr;
+
 public:
     /// Constructor. Creates the board for a game in the starting position.
-    explicit Board(const QPixmap& pixmap, QGraphicsItem* parent = nullptr);
+    explicit Board(const QPixmap& pixmap, Game* game, QGraphicsItem* parent = nullptr);
 
     /// Destructor. Eliminates all pointers created (like the pieces).
     ~Board();
@@ -88,6 +91,8 @@ public:
     void changeTurnRepresentation();
 
     void setExplosion(int row, int file);
+
+    void checkIfGameEnded();
 
     /// Sets the scene, so Board is able to make changes to it.
     void setScene(QGraphicsScene* scene);

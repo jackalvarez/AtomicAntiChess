@@ -5,6 +5,7 @@
 #include "Bishop.h"
 #include "Rook.h"
 #include "Knight.h"
+#include "GameEnded.h"
 
 #include <iostream>
 
@@ -15,10 +16,11 @@
     Coordinates( (row), (file) ), boardState); \
     boardState[ (row) ][ (file) ]->setSharedRenderer(svgRenderer)
 
-Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
+Board::Board(const QPixmap &pixmap, Game* game, QGraphicsItem *parent)
     : QGraphicsPixmapItem (pixmap, parent)
     , boardState { new Piece**[8] }
     , turnRepresentation { new QGraphicsEllipseItem(740, 300, 100, 100) }
+    , game { game }
 {
     turnRepresentation->setBrush(Qt::white);
     // Load the graphic resources
@@ -74,8 +76,12 @@ Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
 
 Board::~Board()
 {
-    for(int index = 0; index < 8; ++index)
-        delete[] boardState[index];
+    for(int row = 0; row < 8; ++row)
+    {
+        for(int file = 0; file < 8; ++file)
+            delete boardState[row][file];
+        delete[] boardState[row];
+    }
     delete[] boardState;
     delete selectedRectangle;
 }
@@ -225,6 +231,10 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
     {
         if(colPos == validMoves.capturingMoves[index].file && rowPos == validMoves.capturingMoves[index].row)
         {
+            if ( boardState[rowPos][colPos]->getSymbol().isLower())
+                manager.decreaseBlackCount(1);
+            else
+                manager.decreaseWhiteCount(1);
             delete boardState[rowPos][colPos];
             boardState[rowPos][colPos] = nullptr;
             movePiece(rowPos, colPos);
@@ -239,6 +249,37 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
         changeTurnRepresentation();
         delete selectedRectangle;
         selectedRectangle = nullptr;
+    }
+    manager.setGameState();
+    checkIfGameEnded();
+}
+
+void Board::checkIfGameEnded()
+{
+    QChar gameState = manager.getGameState();
+    if(gameState == 'W' || gameState == 'B')
+    {
+        QString winner;
+        if(gameState == 'W')
+            winner = "White";
+        else if(gameState == 'B')
+            winner = "Black";
+        GameEnded* gameEnded = new GameEnded(winner);
+        gameEnded->exec();
+
+        if(gameEnded->getEndGame())
+        {
+            std::cerr << "Game ended\n";
+            game->endGame();
+            //gameEnded->close();
+        }
+        else if(gameEnded->getResetGame())
+        {
+            std::cerr << "Reset game\n";
+            game->resetGame();
+            //gameEnded->close();
+        }
+
     }
 }
 

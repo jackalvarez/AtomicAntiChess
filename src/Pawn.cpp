@@ -21,7 +21,7 @@ MoveTypes Pawn::getPossibleMoves()
     int direction = (this->symbol == 'P') ? -1 : 1;
 
     // If this is the pawns first move, it can move twice front
-    if ( isFirstMove() )
+    if ( isFirstMove())
         possibleMoves.commutingMoves.push_back( Coordinates(currentPosition.row+(2*direction), currentPosition.file) );\
 
     // If the cell in front of the pawn is empty, it can move there

@@ -1,9 +1,12 @@
 #include "ChessManager.h"
+#include <iostream>
 
 ChessManager::ChessManager()
     : turn { 0 }
     , whitePiecesRemaining { 16 }
     , blackPiecesRemaining { 16 }
+    , whiteTurnsWithoutCapturing { 0 }
+    , blackTurnsWithoutCapturing { 0 }
 {
 }
 
@@ -11,11 +14,11 @@ void ChessManager::setGameState()
 {
     if ( whitePiecesRemaining == 0 || blackTurnsWithoutCapturing >= MAX_TURNS_WITHOUT_CAPTURING)
     {
-        gameState = 'W';
+        gameState = 'B';
     }
     else if ( blackPiecesRemaining == 0 || whiteTurnsWithoutCapturing >= MAX_TURNS_WITHOUT_CAPTURING)
     {
-        gameState = 'B';
+        gameState = 'W';
     }
     else
     {
@@ -50,8 +53,10 @@ int ChessManager::getTurn()
 void ChessManager::decreaseWhiteCount(int decreaseValue)
 {
     whitePiecesRemaining -= decreaseValue;
+    std::cerr << "White pieces remaining: " << whitePiecesRemaining << std::endl;
 }
 void ChessManager::decreaseBlackCount(int decreaseValue)
 {
     blackPiecesRemaining -= decreaseValue;
+    std::cerr << "Black pieces remaining: " << blackPiecesRemaining << std::endl;
 }
