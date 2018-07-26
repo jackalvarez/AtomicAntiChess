@@ -72,6 +72,20 @@ Board::Board(const QPixmap &pixmap, Game* game, QGraphicsItem *parent)
     for(int row = 2; row < 6; ++ row)
         for(int col = 0; col < 8; ++col)
             boardState[row][col] = nullptr;
+
+    for ( int rowPos = 0; rowPos < 7; ++rowPos)
+    {
+        for ( int colPos = 0; colPos < 7; ++colPos)
+        {
+            //if (boardState[rowPos][colPos])
+            //lifeFlags[rowPos][colPos]->setRect(0,0,scene->width()/2,scene->height());
+            //lifeFlags[rowPos][colPos] = new QGraphicsRectItem(colPos * 720 / 8,
+                                                              //rowPos * 695 / 8,
+                                                              //720 / 8, 695 / 8);;
+            //lifeFlags[rowPos][colPos]->setBrush(QBrush(QColor(0, 180, 255, 100)));
+            //this->scene->addItem(lifeFlags[rowPos][colPos]);
+        }
+    }
 }
 
 Board::~Board()
@@ -213,8 +227,6 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
     }
 }
 
-
-
 void Board::movePieceIfPossible(int rowPos, int colPos)
 {
     bool validMove = false;
@@ -286,8 +298,10 @@ void Board::movePiece(int rowPos, int colPos)
     // If the piece is a pawn, and it is in the last rank, a promotion move ocurred
     if ( ( selectedPiece->getSymbol() == 'P' || selectedPiece->getSymbol() == 'p') && ( rowPos == 7 || rowPos == 0 ) )
     {
-        selectedPiece = new Queen('Q', selectedPiece->getPosition(), boardState);
-        delete selectedPiece;
+        boardState[selectedPiece->getPosition().row][selectedPiece->getPosition().file]->deleteLater();
+        QChar newSymbol = (rowPos) ? 'q' : 'Q';
+        selectedPiece = new Queen(newSymbol, selectedPiece->getPosition(), boardState);
+        scene->addItem(selectedPiece);
         //boardState[rowPos][colPos]->setSharedRenderer(svgRenderer);
     }
 
