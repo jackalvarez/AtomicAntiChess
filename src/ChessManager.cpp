@@ -44,9 +44,21 @@ void ChessManager::resetMovesCounter()
         whiteTurnsWithoutCapturing = 0;
 }
 
+void ChessManager::increaseWhiteTurnsWithoutCapturing()
+{
+    ++this->whiteTurnsWithoutCapturing;
+}
+
+void ChessManager::increaseBlackTurnsWithoutCapturing()
+{
+    ++this->blackTurnsWithoutCapturing;
+}
+
 void ChessManager::changeTurn()
 {
     turn = (turn) ? 0 : 1;
+
+    std::cerr << "White " << whiteTurnsWithoutCapturing << " black " << blackTurnsWithoutCapturing << std::endl;
 }
 
 int ChessManager::getTurn()

@@ -14,8 +14,8 @@ Because the winner is the one that runs out of pieces, a player is not advised t
 - Pawns 1
 - Bishops/knights 2
 - Rooks 3
-- Queen 4
-- King 5
+- Queen/King 4
+
 
 So, if a pawn is within the radius of a explosion, it will always be removed from the board, but other pieces may not, depending on how much lives they have left.
 
@@ -37,7 +37,7 @@ This is a project for the Programming II course of Computer Science in the UCR (
 - **First milestone:** The board and the images for the pieces will be created. The pawn's behavior will be programmed, such that they can move two squares to the front in the first move, and one move to the front in the following moves.
 They will also be able to capture a piece as usual (one square diagonally) and this capture will produce an explosion of the 8 squares surrounding the capturing square. For this milestone, the explosion will kill any piece within its radius and all of the pieces but the pawns will be disabled. The animations will be programmed during this milestone.
 
-- **Second milestone:** The rest of the pieces will be enabled (i.e. Knight, Bishop, Rook, Queen, King). The health dynamics of the pieces be program, such that each peace will have its own "health" (how many explosions it can stand). With this milestone a new rule is introduced,
+- **Second milestone:** The rest of the pieces will be enabled (i.e. Knight, Bishop, Rook, Queen, King). The health dynamics of the pieces be program, such that each peace will have its own "health" (how many explosions it can stand). With this milestone a new rule is introduced, the rule of 5 moves. If a player does not capture in 5 consecutive moves, he automatically loses (in order to avoid the repetition of moves).
 
 ## Contributing
 

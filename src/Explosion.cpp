@@ -9,11 +9,6 @@ Explosion::Explosion()
 void Explosion::explode()
 {
     setScale(1);
-    //this->setTransform(QTransform(3, 3, 3, 3, 1, 1));
-    /*animation = new QPropertyAnimation(this, "explosion");
-    animation->setStartValue(QSize(720/8,695/8));
-    animation->setEndValue(QSize(720*3/8,695*3/8));
-    animation->start();*/
 
     QTimer* timer = new QTimer();
     connect(timer, &QTimer::timeout, this, &Explosion::disappear);

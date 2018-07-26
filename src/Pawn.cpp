@@ -32,8 +32,6 @@ MoveTypes Pawn::getPossibleMoves()
         possibleMoves.capturingMoves.push_back( Coordinates(currentPosition.row+direction, currentPosition.file+1) );
     if ( isEnemy(currentPosition.row+direction, currentPosition.file-1) )
         possibleMoves.capturingMoves.push_back( Coordinates(currentPosition.row+direction, currentPosition.file-1) );
-
-    // TODO: Add the move where a pawn can promote to another piece
     
     // Return all the possible commutingMoves and capturingMoves that the player could make with that pawn
     return possibleMoves;

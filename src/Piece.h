@@ -109,10 +109,7 @@ public:
     /// Returns the Coordinates struct of the piece
     inline Coordinates getPosition() const { return this->currentPosition; }
 
-    ///
-    QGraphicsRectItem* getHealthBar();
-
-    /// Documentación
+    /// Returns a color object related to the remaining health of the piece
     QColor getHealthColor() const;
 
     inline int currentX() const { return currentPosition.file; }

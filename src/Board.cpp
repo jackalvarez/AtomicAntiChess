@@ -95,25 +95,19 @@ void Board::setScene(QGraphicsScene* scene)
 
 void Board::addPiecesToScene()
 {
-#if 1
+    // Loops through the board
     for ( int row = 7; row >= 0; --row )
     {
         if ( row >= 6 || row <= 1)
         {
             for ( int col = 0; col < 8; ++col)
             {
+                // Changes the position of the piece
                 boardState[row][col]->setPos(fromCellPosToQPointF(row, col));
                 this->scene->addItem(boardState[row][col]);
-                this->scene->addItem(boardState[row][col]->getHealthBar());
             }
         }
     }
-#endif
-// This was used for testing purposes.
-#if 0
-    boardState[1][0]->setPos(100, 97);
-    scene->addItem(boardState[1][0]);
-#endif
 }
 
 void Board::explode(short captureRow, short captureFile)
@@ -134,11 +128,16 @@ void Board::explode(short captureRow, short captureFile)
         // Loops within one piece radius from the capturing square horizontally 
         for ( ; file <= finalFile; ++file )
         {
+            // Cell is the current piece in the cell of the board
             Piece* cell = boardState[row][file];
+
+            // If the piece is not a nullptr
             if (cell)
             {
+                // Decreases the health of the piece
                 cell->decreaseHealth();
 
+                // If the piece has not health left, delete it
                 if ( cell->getHealth() == 0 )
                 {
                     if ( cell->getSymbol().isLower())
@@ -235,6 +234,12 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
             {
                 movePiece(rowPos, colPos);
                 validMove = true;
+
+                // Adds one to the counter of the piece of moves without capturing
+                if ( boardState[rowPos][colPos]->getSymbol().isUpper())
+                    manager.increaseWhiteTurnsWithoutCapturing();
+                else
+                    manager.increaseBlackTurnsWithoutCapturing();
             }
         }
 
@@ -320,18 +325,25 @@ void Board::movePiece(int rowPos, int colPos)
     // If the piece is a pawn, and it is in the last rank, a promotion move ocurred
     if ( ( selectedPiece->getSymbol() == 'P' || selectedPiece->getSymbol() == 'p') && ( rowPos == 7 || rowPos == 0 ) )
     {
+        // Delete the pawn from the board
         delete boardState[selectedPiece->getPosition().row][selectedPiece->getPosition().file];
+
+        // The new piece will be either a black or a white queen
         QChar newSymbol = (rowPos) ? 'q' : 'Q';
+
+        // Creates the piece and assign it a Queen image
         boardState[rowPos][colPos] = selectedPiece = new Queen(newSymbol, selectedPiece->getPosition(), boardState);
         boardState[rowPos][colPos]->setSharedRenderer(svgRenderer);
+
+        // Add the queen to the board
         scene->addItem(selectedPiece);
     }
-    selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
 
+    // Make the piece move and add it to the board
+    selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
     boardState[rowPos][colPos] = selectedPiece;
     selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
     boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));
-    //boardState[rowPos][colPos]->getHealthBar()->setPos(colPos*720/8 + 75, rowPos*695/8 + 15);
 }
 
 void Board::changeTurnRepresentation()

@@ -19,11 +19,6 @@ Piece::~Piece()
     delete healthBar;
 }
 
-QGraphicsRectItem* Piece::getHealthBar()
-{
-    return this->healthBar;
-}
-
 QColor Piece::getHealthColor() const
 {
     switch( health)
@@ -72,6 +67,7 @@ int Piece::getHealth()
 
 void Piece::move(QPointF newPosition)
 {
+    // Allows the piece to change its propierties to another cell.
     this->moveAnimation = new QPropertyAnimation(this, "pos");
     this->moveAnimation->setStartValue(QPointF(pos().x(), pos().y()));
     this->moveAnimation->setEndValue(newPosition);

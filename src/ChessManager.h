@@ -37,6 +37,10 @@ class ChessManager
     void resetMovesCounter();
     /// Changes the current turn, if it is white, make it black and viceversa
     void changeTurn();
+    /// Increases by one the counter of the white moves without capturing attribute
+    void increaseWhiteTurnsWithoutCapturing();
+    /// Increases by one the counter of the black moves without capturing attribute
+    void increaseBlackTurnsWithoutCapturing();
     /// Returns the current turn of the game
     int getTurn();
     /// Decreases the count of white pieces if at least one was eaten.
