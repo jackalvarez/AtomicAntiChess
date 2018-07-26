@@ -44,8 +44,6 @@ private:
     MoveTypes validMoves;
     /// It keeps track of the remaining pieces of each player, the current turn and if the game ended.
     ChessManager manager;
-    /// QGraphics items that show the health of the pieces (blue if 4, green if 3, yellow if 2, red  if 1)
-    QGraphicsRectItem* lifeFlags[8][8];
     /// Used to show an explosion on the position where a piece was eaten.
     Explosion* explosion;
     /// A circle that is either black or white. It represents the current turn of one of the players.

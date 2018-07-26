@@ -4,9 +4,8 @@
 //#include "Piece.h"
 
 Pawn::Pawn( QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
-    : Piece (symbol, currentPosition, board, parent)
+    : Piece (symbol, currentPosition, board, 1, parent)
 {
-    health = 1;
     QString color = (symbol.isLower()) ? "Black" : "White";
     setElementId( QString("%1Pawn").arg(color) );
 }

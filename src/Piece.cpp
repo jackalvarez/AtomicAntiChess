@@ -3,13 +3,36 @@
 #include "Piece.h"
 
 
-Piece::Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent)
+Piece::Piece(QChar symbol, Coordinates currentPosition, Piece*** board, int health, QGraphicsItem* parent )
     : QGraphicsSvgItem { parent }
     , currentPosition { currentPosition }
     , symbol { symbol }
     , board { board }
-
+    , health { health }
+    , healthBar { new QGraphicsRectItem( currentPosition.file + 75, currentPosition.row + 15, 8, 60, this) }
 {
+    healthBar->setBrush(QBrush(getHealthColor()));
+}
+
+Piece::~Piece()
+{
+    delete healthBar;
+}
+
+QGraphicsRectItem* Piece::getHealthBar()
+{
+    return this->healthBar;
+}
+
+QColor Piece::getHealthColor() const
+{
+    switch( health)
+    {
+        case 1: return Qt::red;
+        case 2: return Qt::yellow;
+        case 3: return Qt::green;
+        default: return Qt::blue;
+    }
 }
 
 bool Piece::isEnemy( short row, short file)
@@ -39,6 +62,7 @@ bool Piece::isFree( short row, short file)
 void Piece::decreaseHealth()
 {
     --this->health;
+    healthBar->setBrush(getHealthColor());
 }
 
 int Piece::getHealth()
@@ -54,4 +78,9 @@ void Piece::move(QPointF newPosition)
 
     // Start the animation
     this->moveAnimation->start();
+}
+
+void Piece::setPosition(Coordinates newPosition)
+{
+    currentPosition = newPosition;
 }

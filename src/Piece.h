@@ -1,6 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include <QBrush>
 #include <QChar>
 #include <QGraphicsSvgItem>
 #include <QPropertyAnimation>
@@ -55,13 +56,15 @@ protected:
 
     int health;
 
+    /// QGraphics item that shows the health of the piece (blue if 4, green if 3, yellow if 2, red  if 1)
+    QGraphicsRectItem* healthBar;
+
+
 public:
 
-    explicit Piece(QChar symbol, Coordinates currentPosition, Piece*** board, QGraphicsItem* parent = nullptr);
+    explicit Piece(QChar symbol, Coordinates currentPosition, Piece*** board, int health = 0, QGraphicsItem* parent = nullptr);
     
-    ~Piece()
-    {
-    }
+    ~Piece();
 #if 0
     void destroy(bool removeFromScene = true, bool deleteObject = true)
     {
@@ -106,10 +109,16 @@ public:
     /// Returns the Coordinates struct of the piece
     inline Coordinates getPosition() const { return this->currentPosition; }
 
+    ///
+    QGraphicsRectItem* getHealthBar();
+
+    /// Documentación
+    QColor getHealthColor() const;
+
     inline int currentX() const { return currentPosition.file; }
     inline int currentY() const { return currentPosition.row; }
 
-    inline void setPosition(Coordinates newPosition) { currentPosition = newPosition; }
+    void setPosition(Coordinates newPosition);
 };
 
 

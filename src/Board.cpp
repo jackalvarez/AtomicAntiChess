@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include <QPointF>
+#include <QtGlobal>
 
 #define SET_PIECES(row, file, representationCharacter, pieceType) \
     boardState[ (row) ][ (file) ] = new pieceType ( (representationCharacter), \
@@ -72,20 +73,6 @@ Board::Board(const QPixmap &pixmap, Game* game, QGraphicsItem *parent)
     for(int row = 2; row < 6; ++ row)
         for(int col = 0; col < 8; ++col)
             boardState[row][col] = nullptr;
-
-    for ( int rowPos = 0; rowPos < 7; ++rowPos)
-    {
-        for ( int colPos = 0; colPos < 7; ++colPos)
-        {
-            //if (boardState[rowPos][colPos])
-            //lifeFlags[rowPos][colPos]->setRect(0,0,scene->width()/2,scene->height());
-            //lifeFlags[rowPos][colPos] = new QGraphicsRectItem(colPos * 720 / 8,
-                                                              //rowPos * 695 / 8,
-                                                              //720 / 8, 695 / 8);;
-            //lifeFlags[rowPos][colPos]->setBrush(QBrush(QColor(0, 180, 255, 100)));
-            //this->scene->addItem(lifeFlags[rowPos][colPos]);
-        }
-    }
 }
 
 Board::~Board()
@@ -117,6 +104,7 @@ void Board::addPiecesToScene()
             {
                 boardState[row][col]->setPos(fromCellPosToQPointF(row, col));
                 this->scene->addItem(boardState[row][col]);
+                this->scene->addItem(boardState[row][col]->getHealthBar());
             }
         }
     }
@@ -229,38 +217,47 @@ void Board::savePieceIfPossible(int rowPos, int colPos)
 
 void Board::movePieceIfPossible(int rowPos, int colPos)
 {
-    bool validMove = false;
-    for(int index = 0; index < validMoves.commutingMoves.size() && !validMove; ++index)
+    if(boardState[rowPos][colPos] && ((selectedPiece->getSymbol().isLower() && boardState[rowPos][colPos]->getSymbol().isLower())
+                                      || selectedPiece->getSymbol().isUpper() && boardState[rowPos][colPos]->getSymbol().isUpper()))
     {
-        if(colPos == validMoves.commutingMoves[index].file && rowPos == validMoves.commutingMoves[index].row)
-        {
-            movePiece(rowPos, colPos);
-            validMove = true;
-        }
-    }
-
-    for(int index = 0; index < validMoves.capturingMoves.size() && !validMove; ++index)
-    {
-        if(colPos == validMoves.capturingMoves[index].file && rowPos == validMoves.capturingMoves[index].row)
-        {
-            if ( boardState[rowPos][colPos]->getSymbol().isLower())
-                manager.decreaseBlackCount(1);
-            else
-                manager.decreaseWhiteCount(1);
-            delete boardState[rowPos][colPos];
-            boardState[rowPos][colPos] = nullptr;
-            movePiece(rowPos, colPos);
-            validMove = true;
-            manager.resetMovesCounter();
-            explode(rowPos, colPos);
-        }
-    }
-    if(validMove)
-    {
-        manager.changeTurn();
-        changeTurnRepresentation();
         delete selectedRectangle;
-        selectedRectangle = nullptr;
+        savePieceIfPossible(rowPos, colPos);
+    }
+    else
+    {
+        bool validMove = false;
+        for(int index = 0; index < validMoves.commutingMoves.size() && !validMove; ++index)
+        {
+            if(colPos == validMoves.commutingMoves[index].file && rowPos == validMoves.commutingMoves[index].row)
+            {
+                movePiece(rowPos, colPos);
+                validMove = true;
+            }
+        }
+
+        for(int index = 0; index < validMoves.capturingMoves.size() && !validMove; ++index)
+        {
+            if(colPos == validMoves.capturingMoves[index].file && rowPos == validMoves.capturingMoves[index].row)
+            {
+                if ( boardState[rowPos][colPos]->getSymbol().isLower())
+                    manager.decreaseBlackCount(1);
+                else
+                    manager.decreaseWhiteCount(1);
+                delete boardState[rowPos][colPos];
+                boardState[rowPos][colPos] = nullptr;
+                movePiece(rowPos, colPos);
+                validMove = true;
+                manager.resetMovesCounter();
+                explode(rowPos, colPos);
+            }
+        }
+        if(validMove)
+        {
+            manager.changeTurn();
+            changeTurnRepresentation();
+            delete selectedRectangle;
+            selectedRectangle = nullptr;
+        }
     }
     manager.setGameState();
     checkIfGameEnded();
@@ -304,12 +301,12 @@ void Board::movePiece(int rowPos, int colPos)
         boardState[rowPos][colPos]->setSharedRenderer(svgRenderer);
         scene->addItem(selectedPiece);
     }
-
     selectedPiece->move(fromCellPosToQPointF(rowPos, colPos));
 
     boardState[rowPos][colPos] = selectedPiece;
     selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
     boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));
+    //boardState[rowPos][colPos]->getHealthBar()->setPos(colPos*720/8 + 75, rowPos*695/8 + 15);
 }
 
 void Board::changeTurnRepresentation()
