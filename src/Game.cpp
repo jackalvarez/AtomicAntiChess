@@ -42,7 +42,7 @@ int Game::run()
     scene->addItem( board );
     board->addPiecesToScene();
 
-	// The scene has infinite size, but we want it has the same size than the view
+    // The scene has infinite size, but we want it to have the same size than the view
 	// This stops the weird behavior of the autoscroll feature of the view being smaller than the
 	// scene, because the scene auto-increases when objects are moved
 	this->scene->setSceneRect( this->view->rect() );

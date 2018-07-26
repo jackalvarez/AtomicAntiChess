@@ -18,7 +18,9 @@
 Board::Board(const QPixmap &pixmap, QGraphicsItem *parent)
     : QGraphicsPixmapItem (pixmap, parent)
     , boardState { new Piece**[8] }
+    , turnRepresentation { new QGraphicsEllipseItem(740, 300, 100, 100) }
 {
+    turnRepresentation->setBrush(Qt::white);
     // Load the graphic resources
     this->svgRenderer = new QSvgRenderer(QString("://Graphics_map.svg"));
 	for ( int row = 7; row >= 0; --row )
@@ -81,6 +83,7 @@ Board::~Board()
 void Board::setScene(QGraphicsScene* scene)
 {
     this->scene = scene;
+    this->scene->addItem(turnRepresentation);
 }
 
 void Board::addPiecesToScene()
@@ -135,12 +138,22 @@ void Board::explode(short captureRow, short captureFile)
                     else
                         manager.decreaseWhiteCount(1);
 
+                    setExplosion(row, file);
                     delete boardState[row][file];
                     boardState[row][file] = nullptr;
                 }
             }
         }
     }
+}
+
+void Board::setExplosion(int row, int file)
+{
+    Explosion* miniExplosion = new Explosion();
+    miniExplosion->setPos(fromCellPosToQPointF(row, file));
+    scene->addItem(miniExplosion);
+    miniExplosion->explode();
+    //miniExplosion->deleteLater();
 }
 
 void Board::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -223,6 +236,7 @@ void Board::movePieceIfPossible(int rowPos, int colPos)
     if(validMove)
     {
         manager.changeTurn();
+        changeTurnRepresentation();
         delete selectedRectangle;
         selectedRectangle = nullptr;
     }
@@ -234,6 +248,12 @@ void Board::movePiece(int rowPos, int colPos)
     boardState[rowPos][colPos] = selectedPiece;
     selectedPiece = boardState[selectedPiece->currentY()][selectedPiece->currentX()] = nullptr;
     boardState[rowPos][colPos]->setPosition(Coordinates(rowPos, colPos));
+}
+
+void Board::changeTurnRepresentation()
+{
+    turnRepresentation->brush().color() == Qt::white ? turnRepresentation->setBrush(Qt::black)
+                                                     : turnRepresentation->setBrush(Qt::white);
 }
 
 int Board::filePosition(qreal x) const

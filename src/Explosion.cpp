@@ -23,4 +23,6 @@ void Explosion::explode()
 void Explosion::disappear()
 {
     setScale(0);
+    scene()->removeItem(this);
+    this->deleteLater();
 }

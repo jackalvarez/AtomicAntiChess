@@ -46,6 +46,8 @@ private:
 
     Explosion* explosion;
 
+    QGraphicsEllipseItem* turnRepresentation;
+
 public:
     /// Constructor. Creates the board for a game in the starting position.
     explicit Board(const QPixmap& pixmap, QGraphicsItem* parent = nullptr);
@@ -82,6 +84,10 @@ public:
     /// It tells the piece to move the position given by rowPos, and colPos.
     /// It also does changes to boardState to update the pieces positions.
     void movePiece(int rowPos, int colPos);
+
+    void changeTurnRepresentation();
+
+    void setExplosion(int row, int file);
 
     /// Sets the scene, so Board is able to make changes to it.
     void setScene(QGraphicsScene* scene);

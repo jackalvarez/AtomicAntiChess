@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QGraphicsScene>
 
 class Explosion : public QObject , public QGraphicsPixmapItem
 {
